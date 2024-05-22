@@ -10,7 +10,9 @@ logo: logo2.png
 execute:
   execute_notebooks: cache
   timeout: 100
-
+sphinx:
+  config:
+    html_show_copyright: false
 # Define the name of the latex output file for PDF builds
 latex:
   latex_documents:
