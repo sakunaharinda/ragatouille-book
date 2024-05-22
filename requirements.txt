@@ -1,0 +1,16 @@
+langchain==0.1.17
+openai==1.25.1
+langgraph==0.0.44
+python-dotenv==1.0.1
+langchain-openai==0.1.6
+pypdf==4.2.0
+chromadb==0.5.0
+langchainhub==0.1.15
+youtube-transcript-api==0.6.2
+pytube==15.0.0
+pandas==2.2.2
+scikit-learn==1.4.2
+umap-learn==0.5.6
+cohere==5.4.0
+tavily-python==0.3.3
+neo4j==5.20.0

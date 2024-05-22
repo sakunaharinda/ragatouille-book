@@ -1,0 +1,19 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+  - caption: Tutorials
+    numbered: true
+    chapters:
+    - file: 1_Intro
+    - file: 2_Query_Transformation
+    - file: 3_HyDE
+    - file: 4_Routing
+    - file: 5_Query_Construction
+    - file: 6_Indexing
+    - file: 7_Retrieval
+    - file: 8_Generation
+    - file: 9_Generation_2
+    - file: 10_Final

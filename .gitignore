@@ -2,10 +2,16 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+data/vectorstores
+data/vectorstore*
+book/data/vectorstore
+book/data/vectorstore*
+book/secrets
+book/_build
 # C extensions
+.DS_Store
 *.so
-
+secrets
 # Distribution / packaging
 .Python
 build/
