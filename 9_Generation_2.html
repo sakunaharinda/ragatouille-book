@@ -1,0 +1,1269 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>9. Generation II &#8212; Ragatouille</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '9_Generation_2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="10. Putting it all together with Neo4J" href="10_Final.html" />
+    <link rel="prev" title="8. Generation" href="8_Generation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo2.png" class="logo__image only-light" alt="Ragatouille - Home"/>
+    <script>document.write(`<img src="_static/logo2.png" class="logo__image only-dark" alt="Ragatouille - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Learn RAG with Langchain 🦜⛓️‍💥
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_Intro.html">1. Introduction to RAG with Langchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Query_Transformation.html">2. Query Transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_HyDE.html">3. HyDE (Hypothetical Document Embeddings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Routing.html">4. Routing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_Query_Construction.html">5. Query Construction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_Indexing.html">6. Indexing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Retrieval.html">7. Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_Generation.html">8. Generation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">9. Generation II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Final.html">10. Putting it all together with Neo4J</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book/edit/master/docs/9_Generation_2.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book/issues/new?title=Issue%20on%20page%20%2F9_Generation_2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/9_Generation_2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Generation II</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="generation-ii">
+<h1><span class="section-number">9. </span>Generation II<a class="headerlink" href="#generation-ii" title="Link to this heading">#</a></h1>
+<p>In this section we improve the previous CRAG implementation by adding “Query Analysis” as described in <a class="reference external" href="https://arxiv.org/pdf/2310.11511">Self-RAG</a> and <a class="reference external" href="https://arxiv.org/pdf/2403.14403">Adaptive RAG</a> papers, according to the following graph.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><img alt="arag" src="_images/arag.png" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><em>Improved RAG pipeline with Query analysis and Self-RAG</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> dotenv
+<span class="o">%</span><span class="k">dotenv</span> secrets/secrets.env
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">RecursiveCharacterTextSplitter</span>
+<span class="kn">from</span> <span class="nn">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">WebBaseLoader</span>
+<span class="kn">from</span> <span class="nn">langchain_community.vectorstores</span> <span class="kn">import</span> <span class="n">Chroma</span>
+<span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">OpenAIEmbeddings</span>
+<span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span> <span class="nn">langchain.prompts</span> <span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
+<span class="kn">from</span> <span class="nn">langchain</span> <span class="kn">import</span> <span class="n">hub</span>
+<span class="kn">from</span> <span class="nn">langchain_core.output_parsers</span> <span class="kn">import</span> <span class="n">StrOutputParser</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We start by creating our retriever to retrieve documents (documents about agents, prompt engineering, and adverserial attacks on llms) from the vectorstore.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">urls</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;https://lilianweng.github.io/posts/2023-06-23-agent/&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">docs</span> <span class="o">=</span> <span class="p">[</span><span class="n">WebBaseLoader</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span> <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">]</span>
+<span class="n">docs_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">docs</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+
+<span class="n">text_splitter</span> <span class="o">=</span> <span class="n">RecursiveCharacterTextSplitter</span><span class="o">.</span><span class="n">from_tiktoken_encoder</span><span class="p">(</span>
+    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">30</span>
+<span class="p">)</span>
+<span class="n">doc_splits</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_documents</span><span class="p">(</span><span class="n">docs_list</span><span class="p">)</span>
+
+<span class="c1"># Add to vectorDB</span>
+<span class="n">vectorstore</span> <span class="o">=</span> <span class="n">Chroma</span><span class="o">.</span><span class="n">from_documents</span><span class="p">(</span>
+    <span class="n">documents</span><span class="o">=</span><span class="n">doc_splits</span><span class="p">,</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">&quot;rag-chroma&quot;</span><span class="p">,</span>
+    <span class="n">embedding</span><span class="o">=</span><span class="n">OpenAIEmbeddings</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">retriever</span> <span class="o">=</span> <span class="n">vectorstore</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we create the chain that decides whether to redirect the user question to the vectorstore, or to do a web search or to fallback when the user asks a generic question.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.pydantic_v1</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span>
+
+<span class="k">class</span> <span class="nc">QueryRouter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Routes the user query to appropriate datasources. If the query can be answered using documents about either LLM agents, prompt engineering, or adverserial attacks on LLMs, returns &#39;vectorstore&#39;. Otherwise returns &#39;web_serach&#39;. If the query can be answered using LLM&#39;s internal knowledge, return &#39;fallback&#39;&quot;&quot;&quot;</span>
+    
+    <span class="n">datasource</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;vectorstore&quot;</span><span class="p">,</span> <span class="s2">&quot;web_search&quot;</span><span class="p">,</span> <span class="s2">&quot;fallback&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The datasource to use for answering the query. &#39;vectorstore&#39; if the query is either related to LLM agents, prompt engineering, or adverserial attacks on LLMs </span><span class="se">\</span>
+<span class="s2">                        &#39;web_search&#39; if the query is not related to the above topics and requires web search. &#39;fallback&#39; if the query can be answered using LLM&#39;s internal knowledge&quot;</span><span class="p">)</span>
+                        
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">query_llm</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">with_structured_output</span><span class="p">(</span><span class="n">QueryRouter</span><span class="p">)</span>
+
+<span class="n">query_router_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;You are an expert at routing a user question to a vectorstore or web search. The vectorstore contains documents related to agents, prompt engineering, and adversarial attacks.</span>
+<span class="sd">Use the vectorstore for questions on these topics. Otherwise, use web_search. If the question can be answered using LLM&#39;s internal knowledge, use fallback.\n\n</span>
+<span class="sd">Question: {question}&quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">query_routing_chain</span> <span class="o">=</span> <span class="p">(</span><span class="n">query_router_prompt</span> <span class="o">|</span> <span class="n">query_llm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;What are the types of agent memory?&quot;</span>
+
+<span class="n">query_routing_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>QueryRouter(datasource=&#39;vectorstore&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;Who is tom brady?&quot;</span>
+
+<span class="n">query_routing_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>QueryRouter(datasource=&#39;web_search&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;Hi, how are you?&quot;</span>
+
+<span class="n">query_routing_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>QueryRouter(datasource=&#39;fallback&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Thirdly, we create our <code class="docutils literal notranslate"><span class="pre">DocumentGrader</span></code> that decides whether or not the retrieved documents are relevant to answer the question.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DocumentGrader</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Binary score for relevance check on retrieved documents.&quot;&quot;&quot;</span>
+
+    <span class="n">grade</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> 
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Documents are relevant to the question, &#39;yes&#39; or &#39;no&#39;&quot;</span>
+    <span class="p">)</span>
+    
+<span class="n">grader_llm</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">with_structured_output</span><span class="p">(</span><span class="n">DocumentGrader</span><span class="p">)</span>
+
+<span class="n">grading_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    You are a grader assessing relevance of a retrieved document to a user question. \n</span>
+<span class="sd">    If the document contains keyword(s) or semantic meaning related to the user question, grade it as relevant. \n</span>
+<span class="sd">    Give a binary score &#39;yes&#39; or &#39;no&#39; score to indicate whether the document is relevant to the question.\n\n</span>
+<span class="sd">    Retrieved document: {document}\n\nQuestion: {question}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">grading_chain</span> <span class="o">=</span> <span class="p">(</span><span class="n">grading_prompt</span> <span class="o">|</span> <span class="n">grader_llm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;What is agent memory?&quot;</span>
+<span class="n">docs</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+<span class="n">doc_txt</span> <span class="o">=</span> <span class="n">docs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span>
+<span class="n">grading_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;document&quot;</span><span class="p">:</span> <span class="n">doc_txt</span><span class="p">,</span> <span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DocumentGrader(grade=&#39;yes&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create the chain that would answer the user question based on the provided context.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qa_prmpt</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="s1">&#39;rlm/rag-prompt&#39;</span><span class="p">)</span>
+
+<span class="n">qa_chain</span> <span class="o">=</span> <span class="n">qa_prmpt</span> <span class="o">|</span> <span class="n">llm</span> <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qa_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="s2">&quot;What is agent memory?&quot;</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="n">docs</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;Agent memory refers to the component of an autonomous agent system that enables the agent to retain and recall information over time. This can include both short-term and long-term memory. The memory stream, a type of long-term memory module, records a comprehensive list of the agent&#39;s experiences in natural language.&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create the fallback chain that answers the user query using the LLM’s internal knowledge without any aditional context.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fallback_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    You are an assistant for question-answering tasks. Answer the question based upon your knowledge. Use three sentences maximum and keep the answer concise.\n\n</span>
+<span class="sd">    Question: {question}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">fallback_chain</span> <span class="o">=</span> <span class="n">fallback_prompt</span> <span class="o">|</span> <span class="n">llm</span> <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fallback_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="s2">&quot;Hi how are you?&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;Answer: I&#39;m an artificial intelligence and don&#39;t have feelings, but I&#39;m here and ready to assist you. How can I help you today?&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Initialize the chain the detects whether or not the answer is supported by the retrieved context (i.e., no hallucinations). The <code class="docutils literal notranslate"><span class="pre">HallucinationEvaluator</span></code> returns ‘yes’ if there are no hallucinations, and ‘no’ otherwise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HallucinationEvaluator</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Binary score for hallucination present in generation answer.&quot;&quot;&quot;</span>
+
+    <span class="n">grade</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Answer is grounded in the facts, &#39;yes&#39; or &#39;no&#39;&quot;</span>
+    <span class="p">)</span>
+    
+<span class="n">hallucination_llm</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">with_structured_output</span><span class="p">(</span><span class="n">HallucinationEvaluator</span><span class="p">)</span>
+<span class="n">hallucination_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    You are a grader assessing whether an LLM generation is grounded in / supported by a set of retrieved facts. \n</span>
+<span class="sd">    Give a binary score &#39;yes&#39; or &#39;no&#39;. &#39;Yes&#39; means that the answer is grounded in / supported by the set of facts.\n\n</span>
+<span class="sd">    Set of facts: {documents} \n\n LLM generation: {generation}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">hallucination_chain</span> <span class="o">=</span> <span class="n">hallucination_prompt</span> <span class="o">|</span> <span class="n">hallucination_llm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;What are the types agent memory?&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Question: &quot;</span> <span class="o">+</span> <span class="n">question</span><span class="p">)</span>
+<span class="n">generation</span> <span class="o">=</span> <span class="n">qa_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="n">docs</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generation: &quot;</span> <span class="o">+</span> <span class="n">generation</span><span class="p">)</span>
+<span class="n">hallucination_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;documents&quot;</span><span class="p">:</span> <span class="n">docs</span><span class="p">,</span> <span class="s2">&quot;generation&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Question: What are the types agent memory?
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generation: The types of agent memory include short-term memory, long-term memory, and memory stream. Short-term memory is used for in-context learning. Long-term memory allows the agent to retain and recall information over extended periods, often by using an external vector store and fast retrieval. The memory stream is a long-term memory module that records a comprehensive list of agents’ experiences in natural language.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HallucinationEvaluator(grade=&#39;yes&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Define the chain that assess whether or not the answer, correctly answers the question.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AnswerGrader</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Binary score to assess answer addresses question.&quot;&quot;&quot;</span>
+
+    <span class="n">grade</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Answer addresses the question, &#39;yes&#39; or &#39;no&#39;&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">answer_grader_llm</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">with_structured_output</span><span class="p">(</span><span class="n">AnswerGrader</span><span class="p">)</span>
+<span class="n">answer_grader_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    You are a grader assessing whether an answer addresses / resolves a question. \n</span>
+<span class="sd">    Give a binary score &#39;yes&#39; or &#39;no&#39;. Yes&#39; means that the answer resolves the question.\n\n</span>
+<span class="sd">    Question: {question} \n\n Answer: {answer}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">answer_grader_chain</span> <span class="o">=</span> <span class="n">answer_grader_prompt</span> <span class="o">|</span> <span class="n">answer_grader_llm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">answer_grader_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AnswerGrader(grade=&#39;yes&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">answer_grader_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom Brady is an NFL football player born on August 3, 1977. He has led the Patriots to multiple victories, including setting an NFL record with 21 straight wins and becoming the first player ever to win six Super Bowls.&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AnswerGrader(grade=&#39;no&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Define the web search tool for sercing web.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_community.tools.tavily_search</span> <span class="kn">import</span> <span class="n">TavilySearchResults</span>
+
+<span class="n">web_search_tool</span> <span class="o">=</span> <span class="n">TavilySearchResults</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Define the graph state that would be changed while traversing the graph.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+
+<span class="k">class</span> <span class="nc">GraphState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the state of our graph.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        question: question</span>
+<span class="sd">        generation: LLM generation</span>
+<span class="sd">        documents: list of documents</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">question</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">generation</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">documents</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creating the methods for each node of the graph.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.schema</span> <span class="kn">import</span> <span class="n">Document</span>
+
+
+<span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieve documents</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        state (dict): New key added to state, documents, that contains retrieved documents</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 📃 Retrieving documents...&quot;</span><span class="p">)</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Retrieval</span>
+    <span class="n">documents</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">documents</span>
+    <span class="k">return</span> <span class="n">state</span>
+
+<span class="k">def</span> <span class="nf">web_search</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Web search based on the re-phrased question.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        state (dict): Updates documents key with appended web results</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 🌎 Web searching...&quot;</span><span class="p">)</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Web search</span>
+    <span class="n">docs</span> <span class="o">=</span> <span class="n">web_search_tool</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+    <span class="n">web_results</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">])</span>
+    <span class="n">web_results</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="n">page_content</span><span class="o">=</span><span class="n">web_results</span><span class="p">)</span>
+    
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">web_results</span>
+
+    <span class="k">return</span> <span class="n">state</span>
+
+<span class="k">def</span> <span class="nf">fallback</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate answer using the LLM w/o vectorstore</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        state (dict): New key added to state, generation, that contains LLM generation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 👈 Initiating fallback...&quot;</span><span class="p">)</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="n">generation</span> <span class="o">=</span> <span class="n">fallback_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+    
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">generation</span>
+    <span class="k">return</span> <span class="n">state</span>
+
+<span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate answer using the LLM w/ vectorstore</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        state (dict): New key added to state, generation, that contains LLM generation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 🤖 Generating answer...&quot;</span><span class="p">)</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="n">documents</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span>
+    <span class="n">generation</span> <span class="o">=</span> <span class="n">qa_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="n">documents</span><span class="p">})</span>
+    
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">generation</span>
+    <span class="k">return</span> <span class="n">state</span>
+
+<span class="k">def</span> <span class="nf">grade_documents</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determines whether the retrieved documents are relevant to the question.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        state (dict): Updates documents key with only filtered relevant documents</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 🔍 Grading documents...&quot;</span><span class="p">)</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="n">documents</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Score each doc</span>
+    <span class="n">filtered_docs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">doc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">documents</span><span class="p">):</span>
+        <span class="n">grade</span> <span class="o">=</span> <span class="n">grading_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s1">&#39;document&#39;</span><span class="p">:</span> <span class="n">doc</span><span class="p">,</span> <span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">grade</span><span class="o">.</span><span class="n">grade</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&gt; 📝 </span><span class="se">\033</span><span class="s1">[92mDocument </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> is relevant</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">)</span>
+            <span class="n">filtered_docs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&gt; 📝 </span><span class="se">\033</span><span class="s1">[91mDocument </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> is irrelevant</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">)</span>
+            
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_docs</span>
+    <span class="k">return</span> <span class="n">state</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creating the methods for conditional edges.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">route_question</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Route question to web search or RAG.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Next node to call</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="n">route</span> <span class="o">=</span> <span class="n">query_routing_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+    
+    <span class="k">if</span> <span class="n">route</span><span class="o">.</span><span class="n">datasource</span> <span class="o">==</span> <span class="s2">&quot;vectorstore&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 📚 Routing to the vectorstore...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;retrieve&quot;</span>
+    
+    <span class="k">elif</span> <span class="n">route</span><span class="o">.</span><span class="n">datasource</span> <span class="o">==</span> <span class="s2">&quot;web_search&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 🌎 Routing to web search...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;web_search&quot;</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 👈 Routing to fallback...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;fallback&quot;</span>
+    
+    
+<span class="k">def</span> <span class="nf">decide_to_generate</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determines whether to generate an answer, or re-generate a question.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Binary decision for next node to call</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 🤔 Deciding to generate...&quot;</span><span class="p">)</span>
+    <span class="n">filtered_documents</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">filtered_documents</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 💡 Decision: </span><span class="se">\033</span><span class="s2">[91mAll the retrieved documents are irrelevant</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;web_search&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># We have relevant documents, so generate answer</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 💡 Decision: </span><span class="se">\033</span><span class="s2">[92mRelevant documents found</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;generate&quot;</span>
+    
+    
+<span class="k">def</span> <span class="nf">evaluate_response</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determines whether the generation is grounded in the document and answers question.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Decision for next node to call</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="n">documents</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span>
+    <span class="n">generation</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 🧠 Evaluating the response for hallucinations...&quot;</span><span class="p">)</span>
+    
+    <span class="n">hallucination_grade</span> <span class="o">=</span> <span class="n">hallucination_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;documents&quot;</span><span class="p">:</span> <span class="n">documents</span><span class="p">,</span> <span class="s2">&quot;generation&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="p">})</span>
+    
+    <span class="k">if</span> <span class="n">hallucination_grade</span><span class="o">.</span><span class="n">grade</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; ✅ </span><span class="se">\033</span><span class="s2">[92mGeneration is grounded in the documents</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 🧠 Evaluating the response for answer...&quot;</span><span class="p">)</span>
+        
+        <span class="n">answer_grade</span> <span class="o">=</span> <span class="n">answer_grader_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="p">})</span>
+        
+        <span class="k">if</span> <span class="n">answer_grade</span><span class="o">.</span><span class="n">grade</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; ✅ </span><span class="se">\033</span><span class="s2">[92mAnswer addresses the question</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;useful&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; ❌ </span><span class="se">\033</span><span class="s2">[91mAnswer does not address the question</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;notuseful&quot;</span>
+        
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; ❌ </span><span class="se">\033</span><span class="s2">[91mGeneration is not grounded in the documents</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;not supported&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Build the tree and compile it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langgraph.graph</span> <span class="kn">import</span> <span class="n">END</span><span class="p">,</span> <span class="n">StateGraph</span>
+
+<span class="n">workflow</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">GraphState</span><span class="p">)</span>
+
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;retrieve&quot;</span><span class="p">,</span> <span class="n">retrieve</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;web_search&quot;</span><span class="p">,</span> <span class="n">web_search</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;fallback&quot;</span><span class="p">,</span> <span class="n">fallback</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;generate&quot;</span><span class="p">,</span> <span class="n">generate</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;grade_documents&quot;</span><span class="p">,</span> <span class="n">grade_documents</span><span class="p">)</span>
+
+<span class="n">workflow</span><span class="o">.</span><span class="n">set_conditional_entry_point</span><span class="p">(</span>
+    <span class="n">route_question</span><span class="p">,</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;retrieve&#39;</span><span class="p">:</span> <span class="s1">&#39;retrieve&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;web_search&#39;</span><span class="p">:</span> <span class="s1">&#39;web_search&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fallback&#39;</span><span class="p">:</span> <span class="s1">&#39;fallback&#39;</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;retrieve&quot;</span><span class="p">,</span> <span class="s2">&quot;grade_documents&quot;</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;web_search&quot;</span><span class="p">,</span> <span class="s2">&quot;generate&quot;</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_conditional_edges</span><span class="p">(</span>
+    <span class="s1">&#39;grade_documents&#39;</span><span class="p">,</span>
+    <span class="n">decide_to_generate</span><span class="p">,</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;web_search&#39;</span><span class="p">:</span> <span class="s1">&#39;web_search&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;generate&#39;</span><span class="p">:</span> <span class="s1">&#39;generate&#39;</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_conditional_edges</span><span class="p">(</span>
+    <span class="s1">&#39;generate&#39;</span><span class="p">,</span>
+    <span class="n">evaluate_response</span><span class="p">,</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;useful&#39;</span><span class="p">:</span> <span class="n">END</span><span class="p">,</span>
+        <span class="s1">&#39;notuseful&#39;</span><span class="p">:</span> <span class="s1">&#39;web_search&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;not supported&#39;</span><span class="p">:</span> <span class="s1">&#39;generate&#39;</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;fallback&quot;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">run_pipeline</span><span class="p">(</span><span class="n">question</span><span class="p">):</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">app</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;generate&#39;</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;fallback&#39;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Question: </span><span class="si">{</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Answer: </span><span class="si">{</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;generation&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Execute the tree.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">run_pipeline</span><span class="p">(</span><span class="s2">&quot;What are the types of agent memory?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📚 Routing to the vectorstore...
+&gt; 📃 Retrieving documents...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 🔍 Grading documents...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📝 Document 0 is relevant
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📝 Document 1 is irrelevant
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📝 Document 2 is relevant
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📝 Document 3 is relevant
+&gt; 🤔 Deciding to generate...
+&gt; 💡 Decision: Relevant documents found
+&gt; 🤖 Generating answer...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 🧠 Evaluating the response for hallucinations...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; ✅ Generation is grounded in the documents
+&gt; 🧠 Evaluating the response for answer...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; ✅ Answer addresses the question
+
+Question: What are the types of agent memory?
+Answer: The types of agent memory include sensory memory, short-term memory, and long-term memory. Sensory memory retains impressions of sensory information such as visual, auditory, and touch stimuli for a few seconds. Short-term memory is used for in-context learning, while long-term memory allows the agent to retain and recall information over extended periods, often by leveraging an external vector store and fast retrieval.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The LangSmith trace for the above workflow will look like <a class="reference external" href="https://smith.langchain.com/public/14f935da-bafb-42e9-b863-f545cc6f8485/r">this</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">run_pipeline</span><span class="p">(</span><span class="s2">&quot;How to continually pre-train an LLM?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📚 Routing to the vectorstore...
+&gt; 📃 Retrieving documents...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 🔍 Grading documents...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📝 Document 0 is irrelevant
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📝 Document 1 is irrelevant
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📝 Document 2 is irrelevant
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📝 Document 3 is irrelevant
+&gt; 🤔 Deciding to generate...
+&gt; 💡 Decision: All the retrieved documents are irrelevant
+&gt; 🌎 Web searching...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 🤖 Generating answer...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 🧠 Evaluating the response for hallucinations...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; ✅ Generation is grounded in the documents
+&gt; 🧠 Evaluating the response for answer...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; ✅ Answer addresses the question
+
+Question: How to continually pre-train an LLM?
+Answer: To continually pre-train a Large Language Model (LLM), you should update the pre-trained models with new data instead of re-training them from scratch. This process can be made more efficient by re-warming and re-decaying the learning rate, and adding a small portion of the original pretraining data to the new dataset to prevent catastrophic forgetting. The learning rate should be re-increased to keep training the pre-trained language model on new data.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The LangSmith trace for the above workflow will look like <a class="reference external" href="https://smith.langchain.com/public/a5a9d1a7-4190-433e-9eb6-f1339870abb4/r">this</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">run_pipeline</span><span class="p">(</span><span class="s2">&quot;Who is Bobby Lee?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 🌎 Routing to web search...
+&gt; 🌎 Web searching...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 🤖 Generating answer...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 🧠 Evaluating the response for hallucinations...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; ✅ Generation is grounded in the documents
+&gt; 🧠 Evaluating the response for answer...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; ✅ Answer addresses the question
+
+Question: Who is Bobby Lee?
+Answer: Bobby Lee, whose full name is Robert Young Lee Jr., is an American stand-up comedian, actor, and podcaster. He was a cast member on MADtv from 2001 to 2009 and co-starred in the ABC sitcom series Splitting Up Together. He is also known for his roles in &quot;A Very Harold &amp; Kumar Christmas&quot; and &quot;Paul&quot;, and for his shows Tigerbelly and Bad Friends.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The LangSmith trace for the above workflow will look like <a class="reference external" href="https://smith.langchain.com/public/7ec11744-7e30-469d-842e-dea6c89d9a59/r">this</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">run_pipeline</span><span class="p">(</span><span class="s2">&quot;Hi, how are you?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 👈 Routing to fallback...
+&gt; 👈 Initiating fallback...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Question: Hi, how are you?
+Answer: I&#39;m an artificial intelligence and don&#39;t have feelings, but I&#39;m here and ready to assist you. How can I help you today?
+</pre></div>
+</div>
+</div>
+</div>
+<p>The LangSmith trace for the above workflow will look like <a class="reference external" href="https://smith.langchain.com/public/d8b8fc93-fee7-46ee-8350-373f3bd45f38/r">this</a>.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="8_Generation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Generation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="10_Final.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">10. </span>Putting it all together with Neo4J</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sakuna Jayasundara
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

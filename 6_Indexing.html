@@ -1,0 +1,1186 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>6. Indexing &#8212; Ragatouille</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '6_Indexing';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="7. Retrieval" href="7_Retrieval.html" />
+    <link rel="prev" title="5. Query Construction" href="5_Query_Construction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo2.png" class="logo__image only-light" alt="Ragatouille - Home"/>
+    <script>document.write(`<img src="_static/logo2.png" class="logo__image only-dark" alt="Ragatouille - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Learn RAG with Langchain 🦜⛓️‍💥
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_Intro.html">1. Introduction to RAG with Langchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Query_Transformation.html">2. Query Transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_HyDE.html">3. HyDE (Hypothetical Document Embeddings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Routing.html">4. Routing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_Query_Construction.html">5. Query Construction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Indexing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Retrieval.html">7. Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_Generation.html">8. Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_Generation_2.html">9. Generation II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Final.html">10. Putting it all together with Neo4J</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book/edit/master/docs/6_Indexing.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book/issues/new?title=Issue%20on%20page%20%2F6_Indexing.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/6_Indexing.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Indexing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-representation-indexing">6.1. Multi-representation indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raptor-recursive-abstractive-processing-for-tree-organized-retrieval">6.2. RAPTOR (Recursive Abstractive Processing for Tree-Organized Retrieval)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-documents">6.2.1. Loading the documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tree-construction">6.2.2. Tree construction</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="indexing">
+<h1><span class="section-number">6. </span>Indexing<a class="headerlink" href="#indexing" title="Link to this heading">#</a></h1>
+<p>In RAG, the first thing we do is creating a vector store that stores “chunks” of the provided documents. They are stored in our vector database in a way that they can easily and efficiently be retrieved given a query. It is called indexing. In this section we will be looking at different indexing techniques fascilitated by Langchain to optimize RAG.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> dotenv
+<span class="o">%</span><span class="k">dotenv</span> secrets/secrets.env
+</pre></div>
+</div>
+</div>
+</div>
+<section id="multi-representation-indexing">
+<h2><span class="section-number">6.1. </span>Multi-representation indexing<a class="headerlink" href="#multi-representation-indexing" title="Link to this heading">#</a></h2>
+<p>In multi-representation indexing, instead of chunking and embedding the whole documents, we first generate summaries of each document. Then the embeddings of the summeries will be stored in the vectorstore, while the complete documents related to those summeries through an id are stored in a seperate in-memory database (i.e., a document store). Once the user asks a question, our multi-vector retriever will first get the most similar summeries from the vector store, follwed by the corresponding documents from the document store. As a result not only the similarity search will be optimized due to the small embedding space, but also the LLM can use the entire original documents as the context (instead of chunks) to answer the question accurately.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_core.documents</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">langchain_community.vectorstores</span> <span class="kn">import</span> <span class="n">Chroma</span>
+<span class="kn">from</span> <span class="nn">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">WebBaseLoader</span><span class="p">,</span> <span class="n">PyPDFLoader</span>
+<span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">RecursiveCharacterTextSplitter</span>
+<span class="kn">from</span> <span class="nn">langchain_core.output_parsers</span> <span class="kn">import</span> <span class="n">StrOutputParser</span>
+<span class="kn">from</span> <span class="nn">langchain_core.runnables</span> <span class="kn">import</span> <span class="n">RunnablePassthrough</span>
+<span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span><span class="p">,</span> <span class="n">OpenAIEmbeddings</span>
+<span class="kn">from</span> <span class="nn">langchain.prompts</span> <span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
+<span class="kn">from</span> <span class="nn">langchain</span> <span class="kn">import</span> <span class="n">hub</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>First we create two documents to answer the user questions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loader</span> <span class="o">=</span> <span class="n">WebBaseLoader</span><span class="p">(</span><span class="s2">&quot;https://lilianweng.github.io/posts/2023-06-23-agent/&quot;</span><span class="p">)</span>
+<span class="n">docs</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="n">loader</span> <span class="o">=</span> <span class="n">WebBaseLoader</span><span class="p">(</span><span class="s2">&quot;https://lilianweng.github.io/posts/2024-02-05-human-data-quality/&quot;</span><span class="p">)</span>
+<span class="n">docs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we create a chain that generates summeries from the page contents of each document.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chain</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;doc&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">page_content</span><span class="p">}</span>
+    <span class="o">|</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="s2">&quot;Summarize the following document:</span><span class="se">\n\n</span><span class="si">{doc}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="o">|</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span><span class="n">max_retries</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">summaries</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;max_concurrency&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summaries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The document discusses the concept of building autonomous agents powered by Large Language Models (LLMs). It explains the key components of such agents, including Planning, Memory, and Tool Use. Several proof-of-concept examples are provided, such as AutoGPT and GPT-Engineer, showcasing the potential of LLMs in various tasks. Challenges related to finite context length, planning, and reliability of natural language interfaces are also addressed. Finally, the document includes citations and references for further reading.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>After generating summeries, we create our <code class="docutils literal notranslate"><span class="pre">docstore</span></code> as an <code class="docutils literal notranslate"><span class="pre">InMemoryByteStore</span></code> to store documents indexed using a UUID and our Chroma <code class="docutils literal notranslate"><span class="pre">vectorestore</span></code> to store the embeddings of the summaries converted into documents. Here, we link the summeries with documents using a UUID which is added as a metadata to each summary. Finally we create our <code class="docutils literal notranslate"><span class="pre">MultiVectorRetriever</span></code> with the created <code class="docutils literal notranslate"><span class="pre">vectorstore</span></code>, <code class="docutils literal notranslate"><span class="pre">docstore</span></code>, and <code class="docutils literal notranslate"><span class="pre">doc_id</span></code> as the link between them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.storage</span> <span class="kn">import</span> <span class="n">InMemoryByteStore</span>
+<span class="kn">from</span> <span class="nn">langchain.retrievers.multi_vector</span> <span class="kn">import</span> <span class="n">MultiVectorRetriever</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="n">docstore</span> <span class="o">=</span> <span class="n">InMemoryByteStore</span><span class="p">()</span> <span class="c1"># To store the documents</span>
+<span class="n">vectorstore</span> <span class="o">=</span> <span class="n">Chroma</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s2">&quot;summaries&quot;</span><span class="p">,</span> <span class="n">embedding_function</span><span class="o">=</span><span class="n">OpenAIEmbeddings</span><span class="p">())</span> <span class="c1"># To store the embeddings from the summeries of the documents</span>
+
+<span class="c1"># ids that map summeries to the documents</span>
+<span class="n">doc_ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">]</span>
+
+<span class="c1"># Create documents from summeries. </span>
+<span class="n">summary_docs</span> <span class="o">=</span> <span class="p">[</span><span class="n">Document</span><span class="p">(</span><span class="n">page_content</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;doc_id&quot;</span><span class="p">:</span> <span class="n">doc_id</span><span class="p">})</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">doc_id</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">summaries</span><span class="p">,</span> <span class="n">doc_ids</span><span class="p">)]</span>
+
+<span class="c1"># Create the retriever</span>
+<span class="n">retriever</span> <span class="o">=</span> <span class="n">MultiVectorRetriever</span><span class="p">(</span>
+    <span class="n">vectorstore</span><span class="o">=</span><span class="n">vectorstore</span><span class="p">,</span>
+    <span class="n">byte_store</span><span class="o">=</span><span class="n">docstore</span><span class="p">,</span>
+    <span class="n">id_key</span><span class="o">=</span><span class="s2">&quot;doc_id&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Add summaries to the vectorstore</span>
+<span class="n">retriever</span><span class="o">.</span><span class="n">vectorstore</span><span class="o">.</span><span class="n">add_documents</span><span class="p">(</span><span class="n">summary_docs</span><span class="p">)</span>
+
+<span class="c1"># Add docuemnts to the docstore</span>
+<span class="n">retriever</span><span class="o">.</span><span class="n">docstore</span><span class="o">.</span><span class="n">mset</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">doc_ids</span><span class="p">,</span> <span class="n">docs</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can then query the vectorstore to get the relevant summary to the user query.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;Memory in agents&quot;</span>
+<span class="n">sub_docs</span> <span class="o">=</span> <span class="n">vectorstore</span><span class="o">.</span><span class="n">similarity_search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sub_docs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Document(page_content=&#39;The document discusses the concept of building autonomous agents powered by Large Language Models (LLMs). It explains the key components of such agents, including Planning, Memory, and Tool Use. Several proof-of-concept examples are provided, such as AutoGPT and GPT-Engineer, showcasing the potential of LLMs in various tasks. Challenges related to finite context length, planning, and reliability of natural language interfaces are also addressed. Finally, the document includes citations and references for further reading.&#39;, metadata={&#39;doc_id&#39;: &#39;997d7f6e-3911-49e8-b23f-3dca97361902&#39;})
+</pre></div>
+</div>
+</div>
+</div>
+<p>Also, we can directly get the document related to the user query, which can be used to provide as the context to the LLM to answer the user question.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You have to make sure that the LLM has enough context length to fit the entire document and the question.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retrieved_docs</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">retrieved_docs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>43902
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="raptor-recursive-abstractive-processing-for-tree-organized-retrieval">
+<h2><span class="section-number">6.2. </span>RAPTOR (Recursive Abstractive Processing for Tree-Organized Retrieval)<a class="headerlink" href="#raptor-recursive-abstractive-processing-for-tree-organized-retrieval" title="Link to this heading">#</a></h2>
+<p>Even though the multi-representation indexing allows us to index large documents and retrieve them as the context, providing the whole raw document to the LLM will be costly as well as slow. Furthermore, if multiple documents are needed to answer the user question, it is difficult to do with multi-representation indexing. Therefore, as a solution <a class="reference external" href="https://arxiv.org/pdf/2401.18059">RAPTOR</a> was introduced, which uses hierarchical indexing to recursively embedd, cluster, and summarize chunks of text, constructing a tree with differing levels of summarization from the bottom up.</p>
+<p>In that tree, leaf nodes would be chunk of texts (according to the paper) or full documents in this case. Then RAPTOR embed the leaf nodes and cluster them. Each cluster is summerized into higher level (more abstract) consolidations of information across similar documents. This process is done recursivly, until only one cluster is left.</p>
+<p>Let’s see how it can be implemented using Langchain!</p>
+<section id="loading-the-documents">
+<h3><span class="section-number">6.2.1. </span>Loading the documents<a class="headerlink" href="#loading-the-documents" title="Link to this heading">#</a></h3>
+<p>First we create 2 documents from 2 papers and combine them. Also we initialize the LLM and the embedding model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lora_doc</span> <span class="o">=</span> <span class="n">PyPDFLoader</span><span class="p">(</span><span class="s2">&quot;data/LORA.pdf&quot;</span><span class="p">)</span>
+<span class="n">docs</span> <span class="o">=</span> <span class="n">lora_doc</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="n">qlora_doc</span> <span class="o">=</span> <span class="n">PyPDFLoader</span><span class="p">(</span><span class="s2">&quot;data/QLORA.pdf&quot;</span><span class="p">)</span>
+<span class="n">docs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">qlora_doc</span><span class="o">.</span><span class="n">load</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sorted_docs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">])</span>
+<span class="n">d_reversed</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">sorted_docs</span><span class="p">))</span>
+
+<span class="n">concatenated_content</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2"> --- </span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">doc</span><span class="o">.</span><span class="n">page_content</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">d_reversed</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Chunk the combined documents.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunk_size_tok</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">text_splitter</span> <span class="o">=</span> <span class="n">RecursiveCharacterTextSplitter</span><span class="p">(</span>
+    <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size_tok</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">texts_split</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span><span class="n">concatenated_content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">embeddings</span> <span class="o">=</span> <span class="n">OpenAIEmbeddings</span><span class="p">()</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tree-construction">
+<h3><span class="section-number">6.2.2. </span>Tree construction<a class="headerlink" href="#tree-construction" title="Link to this heading">#</a></h3>
+<!-- ![image RAPTOR](resources/raptor.png) -->
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><img alt="RAPTOR" src="_images/raptor.png" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><em><a class="reference external" href="https://arxiv.org/pdf/2401.18059">RAPTOR</a> high-level architecture</em></p></td>
+</tr>
+</tbody>
+</table>
+<p>Once we have the set of document chinks, <a class="reference external" href="https://arxiv.org/pdf/2401.18059">RAPTOR</a> recursively cluseters and summerizes them to builds the tree bottom-up. When clustering, according to the paper, “soft-clustering” is used. It allows a data point (i.e., chunk of text) to be clustered into multiple clusters. This flexibility is essential because individual text segments often contain information relevant to various topics, thereby warranting their inclusion in multiple summaries. Therefore to achieve such a flexibility, the authors of RAPTOR used Gaussian Mixture Models (GMM).</p>
+<p><strong>GMM (Gaussian Mixture Model)</strong></p>
+<ul class="simple">
+<li><p>Model the distribution of data points across different clusters.</p></li>
+<li><p>GMM assumes that each data point is coming from a mixture of several gaussian distributions.</p></li>
+<li><p>The optimal number of clusters are determined by Bayesian Information Criterion (BIC).</p></li>
+</ul>
+<p>However, GMM tends to perform poorly when the dimensionality of the embedding space is high, as distance metrics may behave poorly when used to measure similarity in high-dimensional spaces. Therefore, as a remedy, authors then used Uniform Manifold Approximation and Projection (UMAP), a dimentionality reduction technique.</p>
+<p><strong>UMAP (Uniform Manifold Approximation and Projection)</strong></p>
+<ul class="simple">
+<li><p>Supports clustering.</p></li>
+<li><p>Reduces the dimensionality of high-dimensional data.</p></li>
+<li><p>UMAP helps to highlight the natural grouping of data points based on their similarities</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">umap.umap_</span> <span class="k">as</span> <span class="nn">umap</span>
+<span class="kn">from</span> <span class="nn">langchain.prompts</span> <span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
+<span class="kn">from</span> <span class="nn">langchain_core.output_parsers</span> <span class="kn">import</span> <span class="n">StrOutputParser</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+
+<span class="n">RANDOM_SEED</span> <span class="o">=</span> <span class="mi">224</span>  <span class="c1"># Fixed seed for reproducibility</span>
+
+<span class="c1">### --- Code from citations referenced above (added comments and docstrings) --- ###</span>
+
+
+<span class="k">def</span> <span class="nf">global_cluster_embeddings</span><span class="p">(</span>
+    <span class="n">embeddings</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">n_neighbors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cosine&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform global dimensionality reduction on the embeddings using UMAP.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - embeddings: The input embeddings as a numpy array.</span>
+<span class="sd">    - dim: The target dimensionality for the reduced space.</span>
+<span class="sd">    - n_neighbors: Optional; the number of neighbors to consider for each point.</span>
+<span class="sd">                   If not provided, it defaults to the square root of the number of embeddings.</span>
+<span class="sd">    - metric: The distance metric to use for UMAP.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - A numpy array of the embeddings reduced to the specified dimensionality.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">n_neighbors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">n_neighbors</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">umap</span><span class="o">.</span><span class="n">UMAP</span><span class="p">(</span>
+        <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="n">dim</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">local_cluster_embeddings</span><span class="p">(</span>
+    <span class="n">embeddings</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cosine&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform local dimensionality reduction on the embeddings using UMAP, typically after global clustering.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - embeddings: The input embeddings as a numpy array.</span>
+<span class="sd">    - dim: The target dimensionality for the reduced space.</span>
+<span class="sd">    - num_neighbors: The number of neighbors to consider for each point.</span>
+<span class="sd">    - metric: The distance metric to use for UMAP.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - A numpy array of the embeddings reduced to the specified dimensionality.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">umap</span><span class="o">.</span><span class="n">UMAP</span><span class="p">(</span>
+        <span class="n">n_neighbors</span><span class="o">=</span><span class="n">num_neighbors</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="n">dim</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_optimal_clusters</span><span class="p">(</span>
+    <span class="n">embeddings</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">max_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">RANDOM_SEED</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine the optimal number of clusters using the Bayesian Information Criterion (BIC) with a Gaussian Mixture Model.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - embeddings: The input embeddings as a numpy array.</span>
+<span class="sd">    - max_clusters: The maximum number of clusters to consider.</span>
+<span class="sd">    - random_state: Seed for reproducibility.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - An integer representing the optimal number of clusters found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">max_clusters</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_clusters</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">))</span> <span class="c1"># Maximum number of clusters is limited by the number of embeddings</span>
+    <span class="n">n_clusters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_clusters</span><span class="p">)</span> <span class="c1"># Range of clusters to consider (1 to max_clusters)</span>
+    <span class="n">bics</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">n_clusters</span><span class="p">:</span>
+        <span class="n">gm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span> <span class="c1"># For each number of clusters (i.e., number of mixture components) n, calculate gaussian mixture distribution parameters </span>
+        <span class="n">gm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+        <span class="n">bics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gm</span><span class="o">.</span><span class="n">bic</span><span class="p">(</span><span class="n">embeddings</span><span class="p">))</span> <span class="c1"># Calculate the Bayesian Information Criterion (BIC) for the current number of clusters</span>
+    <span class="k">return</span> <span class="n">n_clusters</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">bics</span><span class="p">)]</span> <span class="c1"># Return the number of clusters that minimized the BIC</span>
+
+
+<span class="k">def</span> <span class="nf">GMM_cluster</span><span class="p">(</span><span class="n">embeddings</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cluster embeddings using a Gaussian Mixture Model (GMM) based on a probability threshold.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - embeddings: The input embeddings as a numpy array.</span>
+<span class="sd">    - threshold: The probability threshold for assigning an embedding to a cluster.</span>
+<span class="sd">    - random_state: Seed for reproducibility.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - A tuple containing the cluster labels and the number of clusters determined.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_clusters</span> <span class="o">=</span> <span class="n">get_optimal_clusters</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span> <span class="c1"># Determine the optimal number of clusters using BIC</span>
+    <span class="n">gm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+    <span class="n">gm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span> <span class="c1"># Fit the Gaussian mixture distribution with parameters related to the optimal number of clusters to the embeddings</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">gm</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span> <span class="c1"># Calculate the probabilities of each embedding belonging to each cluster</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">prob</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">probs</span><span class="p">]</span> <span class="c1"># Assign embeddings to clusters based on the threshold</span>
+    <span class="k">return</span> <span class="n">labels</span><span class="p">,</span> <span class="n">n_clusters</span>
+
+
+<span class="k">def</span> <span class="nf">perform_clustering</span><span class="p">(</span>
+    <span class="n">embeddings</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform clustering on the embeddings by first reducing their dimensionality globally, then clustering</span>
+<span class="sd">    using a Gaussian Mixture Model, and finally performing local clustering within each global cluster.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - embeddings: The input embeddings as a numpy array.</span>
+<span class="sd">    - dim: The target dimensionality for UMAP reduction.</span>
+<span class="sd">    - threshold: The probability threshold for assigning an embedding to a cluster in GMM.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - A list of numpy arrays, where each array contains the cluster IDs for each embedding.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># Avoid clustering when there&#39;s insufficient data</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">))]</span>
+
+    <span class="c1"># Global dimensionality reduction</span>
+    <span class="n">reduced_embeddings_global</span> <span class="o">=</span> <span class="n">global_cluster_embeddings</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+    <span class="c1"># Global clustering</span>
+    <span class="n">global_clusters</span><span class="p">,</span> <span class="n">n_global_clusters</span> <span class="o">=</span> <span class="n">GMM_cluster</span><span class="p">(</span>
+        <span class="n">reduced_embeddings_global</span><span class="p">,</span> <span class="n">threshold</span>
+    <span class="p">)</span>
+
+    <span class="n">all_local_clusters</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">))]</span>
+    <span class="n">total_clusters</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Iterate through each global cluster to perform local clustering</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_global_clusters</span><span class="p">):</span>
+        <span class="c1"># Extract embeddings belonging to the current global cluster</span>
+        <span class="n">global_cluster_embeddings_</span> <span class="o">=</span> <span class="n">embeddings</span><span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="ow">in</span> <span class="n">gc</span> <span class="k">for</span> <span class="n">gc</span> <span class="ow">in</span> <span class="n">global_clusters</span><span class="p">])</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">global_cluster_embeddings_</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">global_cluster_embeddings_</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Handle small clusters with direct assignment</span>
+            <span class="n">local_clusters</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">global_cluster_embeddings_</span><span class="p">]</span>
+            <span class="n">n_local_clusters</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Local dimensionality reduction and clustering</span>
+            <span class="n">reduced_embeddings_local</span> <span class="o">=</span> <span class="n">local_cluster_embeddings</span><span class="p">(</span>
+                <span class="n">global_cluster_embeddings_</span><span class="p">,</span> <span class="n">dim</span>
+            <span class="p">)</span>
+            <span class="n">local_clusters</span><span class="p">,</span> <span class="n">n_local_clusters</span> <span class="o">=</span> <span class="n">GMM_cluster</span><span class="p">(</span>
+                <span class="n">reduced_embeddings_local</span><span class="p">,</span> <span class="n">threshold</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Assign local cluster IDs, adjusting for total clusters already processed</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_local_clusters</span><span class="p">):</span>
+            <span class="n">local_cluster_embeddings_</span> <span class="o">=</span> <span class="n">global_cluster_embeddings_</span><span class="p">[</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">j</span> <span class="ow">in</span> <span class="n">lc</span> <span class="k">for</span> <span class="n">lc</span> <span class="ow">in</span> <span class="n">local_clusters</span><span class="p">])</span>
+            <span class="p">]</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">embeddings</span> <span class="o">==</span> <span class="n">local_cluster_embeddings_</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+                <span class="n">all_local_clusters</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">all_local_clusters</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">j</span> <span class="o">+</span> <span class="n">total_clusters</span>
+                <span class="p">)</span>
+
+        <span class="n">total_clusters</span> <span class="o">+=</span> <span class="n">n_local_clusters</span>
+
+    <span class="k">return</span> <span class="n">all_local_clusters</span>
+
+
+<span class="k">def</span> <span class="nf">embed</span><span class="p">(</span><span class="n">texts</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate embeddings for a list of text documents.</span>
+
+<span class="sd">    This function assumes the existence of an `embd` object with a method `embed_documents`</span>
+<span class="sd">    that takes a list of texts and returns their embeddings.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - texts: List[str], a list of text documents to be embedded.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - numpy.ndarray: An array of embeddings for the given text documents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">text_embeddings</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_documents</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+    <span class="n">text_embeddings_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">text_embeddings</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text_embeddings_np</span>
+
+
+<span class="k">def</span> <span class="nf">embed_cluster_texts</span><span class="p">(</span><span class="n">texts</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Embeds a list of texts and clusters them, returning a DataFrame with texts, their embeddings, and cluster labels.</span>
+
+<span class="sd">    This function combines embedding generation and clustering into a single step. It assumes the existence</span>
+<span class="sd">    of a previously defined `perform_clustering` function that performs clustering on the embeddings.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - texts: List[str], a list of text documents to be processed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - pandas.DataFrame: A DataFrame containing the original texts, their embeddings, and the assigned cluster labels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">text_embeddings_np</span> <span class="o">=</span> <span class="n">embed</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>  <span class="c1"># Generate embeddings</span>
+    <span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">perform_clustering</span><span class="p">(</span>
+        <span class="n">text_embeddings_np</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.1</span>
+    <span class="p">)</span>  <span class="c1"># Perform clustering on the embeddings</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>  <span class="c1"># Initialize a DataFrame to store the results</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">texts</span>  <span class="c1"># Store original texts</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;embd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">text_embeddings_np</span><span class="p">)</span>  <span class="c1"># Store embeddings as a list in the DataFrame</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_labels</span>  <span class="c1"># Store cluster labels</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+
+<span class="k">def</span> <span class="nf">fmt_txt</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formats the text documents in a DataFrame into a single string.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - df: DataFrame containing the &#39;text&#39; column with text documents to format.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - A single string where all text documents are joined by a specific delimiter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">unique_txt</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">return</span> <span class="s2">&quot;--- --- </span><span class="se">\n</span><span class="s2"> --- --- &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">unique_txt</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">embed_cluster_summarize_texts</span><span class="p">(</span>
+    <span class="n">texts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">level</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Embeds, clusters, and summarizes a list of texts. This function first generates embeddings for the texts,</span>
+<span class="sd">    clusters them based on similarity, expands the cluster assignments for easier processing, and then summarizes</span>
+<span class="sd">    the content within each cluster.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - texts: A list of text documents to be processed.</span>
+<span class="sd">    - level: An integer parameter that could define the depth or detail of processing.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - Tuple containing two DataFrames:</span>
+<span class="sd">      1. The first DataFrame (`df_clusters`) includes the original texts, their embeddings, and cluster assignments.</span>
+<span class="sd">      2. The second DataFrame (`df_summary`) contains summaries for each cluster, the specified level of detail,</span>
+<span class="sd">         and the cluster identifiers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Embed and cluster the texts, resulting in a DataFrame with &#39;text&#39;, &#39;embd&#39;, and &#39;cluster&#39; columns</span>
+    <span class="n">df_clusters</span> <span class="o">=</span> <span class="n">embed_cluster_texts</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+
+    <span class="c1"># Prepare to expand the DataFrame for easier manipulation of clusters</span>
+    <span class="n">expanded_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Expand DataFrame entries to document-cluster pairings for straightforward processing</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_clusters</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]:</span>
+            <span class="n">expanded_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span> <span class="s2">&quot;embd&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;embd&quot;</span><span class="p">],</span> <span class="s2">&quot;cluster&quot;</span><span class="p">:</span> <span class="n">cluster</span><span class="p">}</span>
+            <span class="p">)</span>
+
+    <span class="c1"># Create a new DataFrame from the expanded list</span>
+    <span class="n">expanded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">expanded_list</span><span class="p">)</span>
+
+    <span class="c1"># Retrieve unique cluster identifiers for processing</span>
+    <span class="n">all_clusters</span> <span class="o">=</span> <span class="n">expanded_df</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--Generated </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_clusters</span><span class="p">)</span><span class="si">}</span><span class="s2"> clusters--&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Summarization</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Here is a sub-set of LangChain Expression Language doc. </span>
+<span class="s2">    </span>
+<span class="s2">    LangChain Expression Language provides a way to compose chain in LangChain.</span>
+<span class="s2">    </span>
+<span class="s2">    Give a detailed summary of the documentation provided.</span>
+<span class="s2">    </span>
+<span class="s2">    Documentation:</span>
+<span class="s2">    </span><span class="si">{context}</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+    <span class="n">chain</span> <span class="o">=</span> <span class="n">prompt</span> <span class="o">|</span> <span class="n">llm</span> <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+
+    <span class="c1"># Format text within each cluster for summarization</span>
+    <span class="n">summaries</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">all_clusters</span><span class="p">:</span>
+        <span class="n">df_cluster</span> <span class="o">=</span> <span class="n">expanded_df</span><span class="p">[</span><span class="n">expanded_df</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span>
+        <span class="n">formatted_txt</span> <span class="o">=</span> <span class="n">fmt_txt</span><span class="p">(</span><span class="n">df_cluster</span><span class="p">)</span>
+        <span class="n">summaries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="n">formatted_txt</span><span class="p">}))</span>
+
+    <span class="c1"># Create a DataFrame to store summaries with their corresponding cluster and level</span>
+    <span class="n">df_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;summaries&quot;</span><span class="p">:</span> <span class="n">summaries</span><span class="p">,</span>
+            <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">summaries</span><span class="p">),</span>
+            <span class="s2">&quot;cluster&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_clusters</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_clusters</span><span class="p">,</span> <span class="n">df_summary</span>
+
+
+<span class="k">def</span> <span class="nf">recursive_embed_cluster_summarize</span><span class="p">(</span>
+    <span class="n">texts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_levels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recursively embeds, clusters, and summarizes texts up to a specified level or until</span>
+<span class="sd">    the number of unique clusters becomes 1, storing the results at each level.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - texts: List[str], texts to be processed.</span>
+<span class="sd">    - level: int, current recursion level (starts at 1).</span>
+<span class="sd">    - n_levels: int, maximum depth of recursion.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - Dict[int, Tuple[pd.DataFrame, pd.DataFrame]], a dictionary where keys are the recursion</span>
+<span class="sd">      levels and values are tuples containing the clusters DataFrame and summaries DataFrame at that level.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Dictionary to store results at each level</span>
+
+    <span class="c1"># Perform embedding, clustering, and summarization for the current level</span>
+    <span class="n">df_clusters</span><span class="p">,</span> <span class="n">df_summary</span> <span class="o">=</span> <span class="n">embed_cluster_summarize_texts</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+
+    <span class="c1"># Store the results of the current level</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_clusters</span><span class="p">,</span> <span class="n">df_summary</span><span class="p">)</span>
+
+    <span class="c1"># Determine if further recursion is possible and meaningful</span>
+    <span class="n">unique_clusters</span> <span class="o">=</span> <span class="n">df_summary</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">level</span> <span class="o">&lt;</span> <span class="n">n_levels</span> <span class="ow">and</span> <span class="n">unique_clusters</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># Use summaries as the input texts for the next level of recursion</span>
+        <span class="n">new_texts</span> <span class="o">=</span> <span class="n">df_summary</span><span class="p">[</span><span class="s2">&quot;summaries&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">next_level_results</span> <span class="o">=</span> <span class="n">recursive_embed_cluster_summarize</span><span class="p">(</span>
+            <span class="n">new_texts</span><span class="p">,</span> <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_levels</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Merge the results from the next level into the current results dictionary</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">next_level_results</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/sakunaharinda/Documents/Repositories/ragatouille/venv/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The above implementation is adopted from a <a class="reference external" href="https://github.com/langchain-ai/langchain/blob/master/cookbook/RAPTOR.ipynb">Langchain cookbook</a>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">leaf_texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">page_content</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">recursive_embed_cluster_summarize</span><span class="p">(</span><span class="n">leaf_texts</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_levels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--Generated 8 clusters--
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--Generated 1 clusters--
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_texts</span> <span class="o">=</span> <span class="n">leaf_texts</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Iterate through the results to extract summaries from each level and add them to all_texts</span>
+<span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+    <span class="c1"># Extract summaries from the current level&#39;s DataFrame</span>
+    <span class="n">summaries</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">level</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;summaries&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="c1"># Extend all_texts with the summaries from the current level</span>
+    <span class="n">all_texts</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">summaries</span><span class="p">)</span>
+
+<span class="c1"># Now, use all_texts to build the vectorstore with Chroma</span>
+<span class="n">vectorstore</span> <span class="o">=</span> <span class="n">Chroma</span><span class="o">.</span><span class="n">from_texts</span><span class="p">(</span><span class="n">texts</span><span class="o">=</span><span class="n">all_texts</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">embeddings</span><span class="p">)</span>
+<span class="n">retriever</span> <span class="o">=</span> <span class="n">vectorstore</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="s2">&quot;rlm/rag-prompt&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># Post-processing</span>
+<span class="k">def</span> <span class="nf">format_docs</span><span class="p">(</span><span class="n">docs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">page_content</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">)</span>
+
+
+<span class="c1"># Chain</span>
+<span class="n">rag_chain</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="n">retriever</span> <span class="o">|</span> <span class="n">format_docs</span><span class="p">,</span> <span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()}</span>
+    <span class="o">|</span> <span class="n">prompt</span>
+    <span class="o">|</span> <span class="n">llm</span>
+    <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="c1"># Question</span>
+<span class="n">rag_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What is the difference between QLoRA and LoRA?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;QLORA improves over LoRA by quantizing the transformer model to 4-bit precision and using paged optimizers to handle memory spikes. LoRA finetuning reduces memory requirements by using a small set of trainable parameters, while QLORA can match the performance of full 16-bit finetuning. QLORA with NormalFloat data type can replicate the performance of 16-bit methods across various tasks and datasets.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The LangSmith trace will look like <a class="reference external" href="https://smith.langchain.com/public/76f6dab0-987c-47ce-b972-e481dc28fa72/r">this</a>.</p>
+<p>In this section, we saw different ways of chunking the input documents and indexing them in addition to our default chunking and indexing done in previous sections with <code class="docutils literal notranslate"><span class="pre">RecursiveCharacterTextSplitter</span></code>. After indexing the next step would be to retrieve the indexed documents and use them as the context to the LLM to facilitate the generation. We will see how it can be done in different ways in the next section.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="5_Query_Construction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Query Construction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="7_Retrieval.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>Retrieval</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-representation-indexing">6.1. Multi-representation indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raptor-recursive-abstractive-processing-for-tree-organized-retrieval">6.2. RAPTOR (Recursive Abstractive Processing for Tree-Organized Retrieval)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-documents">6.2.1. Loading the documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tree-construction">6.2.2. Tree construction</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sakuna Jayasundara
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

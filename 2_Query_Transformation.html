@@ -1,0 +1,1162 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2. Query Transformation &#8212; Ragatouille</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2_Query_Transformation';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. HyDE (Hypothetical Document Embeddings)" href="3_HyDE.html" />
+    <link rel="prev" title="1. Introduction to RAG with Langchain" href="1_Intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo2.png" class="logo__image only-light" alt="Ragatouille - Home"/>
+    <script>document.write(`<img src="_static/logo2.png" class="logo__image only-dark" alt="Ragatouille - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Learn RAG with Langchain 🦜⛓️‍💥
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_Intro.html">1. Introduction to RAG with Langchain</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Query Transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_HyDE.html">3. HyDE (Hypothetical Document Embeddings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Routing.html">4. Routing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_Query_Construction.html">5. Query Construction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_Indexing.html">6. Indexing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Retrieval.html">7. Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_Generation.html">8. Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_Generation_2.html">9. Generation II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Final.html">10. Putting it all together with Neo4J</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book/edit/master/docs/2_Query_Transformation.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book/issues/new?title=Issue%20on%20page%20%2F2_Query_Transformation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/2_Query_Transformation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Query Transformation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#query-translation">2.1. Query Translation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-query">2.1.1. Multi-Query</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rag-fusion">2.1.2. RAG Fusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#query-decomposition">2.2. Query Decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#least-to-most-prompting">2.2.1. Least-to-Most Prompting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-back-prompting">2.2.2. Step back prompting</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="query-transformation">
+<h1><span class="section-number">2. </span>Query Transformation<a class="headerlink" href="#query-transformation" title="Link to this heading">#</a></h1>
+<p>The main idea behind the Query Transformation is that translate/transform the user query in a way that the LLM can correctly answer the question. For instance, if the user asks an ambiguous question, our RAG retriever might retrieve incorrect (or ambiguous) documents based on the embeddings that are not very relevant to answer the user question, leading the LLM to hallucinate answers. There are few ways to tackle this problem. Some of them are,</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2310.06117">Step-back prompting</a>: This involves encouraging the LLM to take a step back from a given question or problem and pose a more abstract, higher-level question that encompasses the essence of the original inquiry.</p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2205.10625">Least-to-most prompting</a>: This allows to break down a complex problem into a series of simpler subproblems and then solve them in sequence. Solving each subproblem is facilitated by the answers to previously solved subproblems.</p></li>
+<li><p>Query re-writing (<a class="reference external" href="https://medium.com/&#64;kbdhunga/advanced-rag-multi-query-retriever-approach-ad8cd0ea0f5b">Multi-Query</a> or <a class="reference external" href="https://towardsdatascience.com/forget-rag-the-future-is-rag-fusion-1147298d8ad1">RAG Fusion</a>): This allows to generate multiple questions from the original question with different wording and perspectives. Then retrieve documents using the similarity scores between each question and the vector store to answer the orginal question.</p></li>
+</ul>
+<p>A blog post about query transformation by Langchain can be found <a class="reference external" href="https://blog.langchain.dev/query-transformations/">here</a>.</p>
+<p>Now, let’s try to implement the above techniques using LangChain!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> dotenv
+<span class="o">%</span><span class="k">dotenv</span> secrets/secrets.env
+</pre></div>
+</div>
+</div>
+</div>
+<p>Similar to the Introduction notebook, we first import the libraries, load documents, split them, generate embeddings, store them in a vector store and create the retriever using the vector store.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">PyPDFLoader</span><span class="p">,</span> <span class="n">DirectoryLoader</span>
+<span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">RecursiveCharacterTextSplitter</span>
+<span class="kn">from</span> <span class="nn">langchain</span> <span class="kn">import</span> <span class="n">hub</span>
+<span class="kn">from</span> <span class="nn">langchain_community.vectorstores</span> <span class="kn">import</span> <span class="n">Chroma</span>
+<span class="kn">from</span> <span class="nn">langchain_core.output_parsers</span> <span class="kn">import</span> <span class="n">StrOutputParser</span>
+<span class="kn">from</span> <span class="nn">langchain_core.runnables</span> <span class="kn">import</span> <span class="n">RunnablePassthrough</span>
+<span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span><span class="p">,</span> <span class="n">OpenAIEmbeddings</span>
+<span class="kn">from</span> <span class="nn">langchain.load</span> <span class="kn">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dumps</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loader</span> <span class="o">=</span> <span class="n">DirectoryLoader</span><span class="p">(</span><span class="s1">&#39;data/&#39;</span><span class="p">,</span><span class="n">glob</span><span class="o">=</span><span class="s2">&quot;*.pdf&quot;</span><span class="p">,</span><span class="n">loader_cls</span><span class="o">=</span><span class="n">PyPDFLoader</span><span class="p">)</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="c1"># Split text into chunks</span>
+
+<span class="n">text_splitter</span>  <span class="o">=</span> <span class="n">RecursiveCharacterTextSplitter</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span><span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">text_chunks</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
+
+<span class="n">vectorstore</span> <span class="o">=</span> <span class="n">Chroma</span><span class="o">.</span><span class="n">from_documents</span><span class="p">(</span><span class="n">documents</span><span class="o">=</span><span class="n">text_chunks</span><span class="p">,</span> 
+                                    <span class="n">embedding</span><span class="o">=</span><span class="n">OpenAIEmbeddings</span><span class="p">(),</span>
+                                    <span class="n">persist_directory</span><span class="o">=</span><span class="s2">&quot;data/vectorstore&quot;</span><span class="p">)</span>
+<span class="n">vectorstore</span><span class="o">.</span><span class="n">persist</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/sakunaharinda/Documents/Repositories/ragatouille/venv/lib/python3.12/site-packages/langchain_core/_api/deprecation.py:119: LangChainDeprecationWarning: Since Chroma 0.4.x the manual persistence method is no longer supported as docs are automatically persisted.
+  warn_deprecated(
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retriever</span> <span class="o">=</span> <span class="n">vectorstore</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">(</span><span class="n">search_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;k&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="query-translation">
+<h2><span class="section-number">2.1. </span>Query Translation<a class="headerlink" href="#query-translation" title="Link to this heading">#</a></h2>
+<section id="multi-query">
+<h3><span class="section-number">2.1.1. </span>Multi-Query<a class="headerlink" href="#multi-query" title="Link to this heading">#</a></h3>
+<p>In multi-query approach, we first use an LLM (here it is an instance of GPT-4) to generate 5 different questions based on our original question. To do that, we create a prompt and encapsulate it with the <code class="docutils literal notranslate"><span class="pre">ChatPromptTemplate</span></code>. Then we create the chain using LCEL, to read the user input and assign it to the <code class="docutils literal notranslate"><span class="pre">question</span></code> placeholder of the prompt, send the prompt to the LLM, parse the output containing 5 questions seperated by new line charcters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.prompts</span> <span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    You are an intelligent assistant. Your task is to generate 5 questions based on the provided question in different wording and different perspectives to retrieve relevant documents from a vector database. By generating multiple perspectives on the user question, your goal is to help the user overcome some of the limitations of the distance-based similarity search. Provide these alternative questions separated by newlines. Original question: {question}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">generate_queries</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()}</span>
+    <span class="o">|</span> <span class="n">prompt</span>
+    <span class="o">|</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+    <span class="o">|</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can check whether or not our query generation works by invoking the created chain with a query.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">generate_queries</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What are the benefits of QLoRA?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;1. Can you list the advantages of using QLoRA?&#39;,
+ &#39;2. What positive outcomes can be expected from using QLoRA?&#39;,
+ &#39;3. In what ways is QLoRA beneficial?&#39;,
+ &#39;4. How can QLoRA be advantageous?&#39;,
+ &#39;5. What are the positive impacts of using QLoRA?&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we get the 5 questions, we parallelly retrieve the most relevant 5 documents for each question (resulting in a list of lists) and create a new document list by taking the unique documents of the union of all the retrieved documents. To do that we create another chain, <code class="docutils literal notranslate"><span class="pre">retrieval_chain</span></code> using LCEL.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_context_union</span><span class="p">(</span><span class="n">docs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">]):</span>
+    <span class="n">all_docs</span> <span class="o">=</span> <span class="p">[</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">docs</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">]</span>
+    <span class="n">unique_docs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">all_docs</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="p">[</span><span class="n">loads</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span><span class="o">.</span><span class="n">page_content</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">unique_docs</span><span class="p">]</span> <span class="c1"># We only return page contents</span>
+
+
+<span class="n">retrieval_chain</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()}</span>
+    <span class="o">|</span> <span class="n">generate_queries</span>
+    <span class="o">|</span> <span class="n">retriever</span><span class="o">.</span><span class="n">map</span><span class="p">()</span>
+    <span class="o">|</span> <span class="n">get_context_union</span>
+<span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retrieval_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What are the benefits of QLoRA?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/sakunaharinda/Documents/Repositories/ragatouille/venv/lib/python3.12/site-packages/langchain_core/_api/beta_decorator.py:87: LangChainBetaWarning: The function `loads` is in beta. It is actively being worked on, so the API may change.
+  warn_beta(
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;trade-off exactly lies for QLoRA tuning, which we leave to future work to explore.\nWe proceed to investigate instruction tuning at scales that would be impossible to explore with full\n16-bit finetuning on academic research hardware.\n5 Pushing the Chatbot State-of-the-art with QLoRA\nHaving established that 4-bit QLORAmatches 16-bit performance across scales, tasks, and datasets\nwe conduct an in-depth study of instruction finetuning up to the largest open-source language models&#39;,
+ &#39;technology. QLORAcan be seen as an equalizing factor that helps to close the resource gap between\nlarge corporations and small teams with consumer GPUs.\nAnother potential source of impact is deployment to mobile phones. We believe our QLORAmethod\nmight enable the critical milestone of enabling the finetuning of LLMs on phones and other low\nresource settings. While 7B models were shown to be able to be run on phones before, QLORAis&#39;,
+ &#39;There are many directions for future works. 1) LoRA can be combined with other efﬁcient adapta-\ntion methods, potentially providing orthogonal improvement. 2) The mechanism behind ﬁne-tuning\nor LoRA is far from clear – how are features learned during pre-training transformed to do well\non downstream tasks? We believe that LoRA makes it more tractable to answer this than full ﬁne-\n12&#39;,
+ &#39;Quantization to reduce the average memory footprint by quantizing the quantization\nconstants, and (c) Paged Optimizers to manage memory spikes. We use QLORA\nto finetune more than 1,000 models, providing a detailed analysis of instruction\nfollowing and chatbot performance across 8 instruction datasets, multiple model\ntypes (LLaMA, T5), and model scales that would be infeasible to run with regular\nfinetuning (e.g. 33B and 65B parameter models). Our results show that QLoRA&#39;,
+ &#39;All in all, we believe that QLORAwill have a broadly positive impact making the finetuning of high\nquality LLMs much more widely and easily accessible.\nAcknowledgements\nWe thank Aditya Kusupati, Ofir Press, Ashish Sharma, Margaret Li, Raphael Olivier, Zihao Ye, and\nEvangelia Spiliopoulou for their valuable feedback. Our research was facilitated by the advanced\ncomputational, storage, and networking infrastructure of the Hyak supercomputer system at the&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally we put all together by creating a one final chain to read the user query, get the contexts from 5 different documents using the <code class="docutils literal notranslate"><span class="pre">retrieval_chain</span></code>, add both the question and context to the prompt, send it through the LLM, and get the final formatted output using  the <code class="docutils literal notranslate"><span class="pre">StrOutputParser</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Asnwer the given question using the provided context.\n\nContext: {context}\n\nQuestion: {question}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">multi_query_chain</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;context&#39;</span><span class="p">:</span> <span class="n">retrieval_chain</span><span class="p">,</span> <span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()}</span>
+    <span class="o">|</span> <span class="n">prompt</span>
+    <span class="o">|</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">multi_query_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What are the benefits of QLoRA?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The benefits of QLoRA include matching 16-bit performance across scales, tasks, and datasets with only 4-bit. It makes training more efficient and lowers the hardware barrier to entry by up to 3 times when using adaptive optimizers. This is because it does not need to calculate the gradients or maintain the optimizer states for most parameters, but only optimizes the injected, much smaller low-rank matrices. Its simple linear design allows the merging of the trainable matrices with the frozen weights when deployed, introducing no inference latency compared to a fully fine-tuned model. QLoRA can also be seen as an equalizing factor that helps to close the resource gap between large corporations and small teams with consumer GPUs. It might enable the finetuning of LLMs on phones and other low resource settings. Lastly, QLoRA can be used to finetune more than 1,000 models, providing a detailed analysis of instruction following and chatbot performance across multiple model types and scales.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>After executing all the above cells, you will be able to see a LangSmith trace like <a class="reference external" href="https://smith.langchain.com/public/31d1e43a-3727-4d0b-82fb-2bbdf146dfac/r">this</a>.</p>
+</section>
+<section id="rag-fusion">
+<h3><span class="section-number">2.1.2. </span>RAG Fusion<a class="headerlink" href="#rag-fusion" title="Link to this heading">#</a></h3>
+<p>In the default multi-query approach, after we retrieved the relevant documents for each question generated for our original question, we take the union of all the documents to select only unique documents (same document can be retrieved by multiple questions). However, we did not pay attention to the rank of each docuemnt in the context, which is important for the LLM to produce the most correct answer. Beacuse the each individual rank would help us to decide the top-k documents to select as the context if we have a huge number of documents with a limited context window of the LLM. Therefore in RAG Fusion, while we do exactly the same thing upto retrieving docuemnts, we use <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/hybrid-search-ranking">Reciprocal Rank Fusion (RRF)</a> to rank the each retrieved document before using them as the context to answer our original question.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rrf</span><span class="p">(</span><span class="n">results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="c1"># Initialize a dictionary to hold fused scores for each unique document</span>
+    <span class="n">fused_scores</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Iterate through each list of ranked documents</span>
+    <span class="k">for</span> <span class="n">docs</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="c1"># Iterate through each document in the list, with its rank (position in the list)</span>
+        <span class="k">for</span> <span class="n">rank</span><span class="p">,</span> <span class="n">doc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">docs</span><span class="p">):</span>
+            <span class="c1"># Convert the document to a string format to use as a key (assumes documents can be serialized to JSON)</span>
+            <span class="n">doc_str</span> <span class="o">=</span> <span class="n">dumps</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+            <span class="c1"># If the document is not yet in the fused_scores dictionary, add it with an initial score of 0</span>
+            <span class="k">if</span> <span class="n">doc_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fused_scores</span><span class="p">:</span>
+                <span class="n">fused_scores</span><span class="p">[</span><span class="n">doc_str</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># Retrieve the current score of the document, if any</span>
+            <span class="n">previous_score</span> <span class="o">=</span> <span class="n">fused_scores</span><span class="p">[</span><span class="n">doc_str</span><span class="p">]</span>
+            <span class="c1"># Update the score of the document using the RRF formula: 1 / (rank + k)</span>
+            <span class="n">fused_scores</span><span class="p">[</span><span class="n">doc_str</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">rank</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span>
+
+    <span class="c1"># Sort the documents based on their fused scores in descending order to get the final reranked results</span>
+    <span class="n">reranked_results</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">doc</span><span class="p">),</span> <span class="n">score</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">doc</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fused_scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Return the reranked results as a list of tuples, each containing the document and its fused score</span>
+    <span class="k">return</span> <span class="n">reranked_results</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The only difference between the below code compared to the multi-query code we went through earlier is, now we use our <code class="docutils literal notranslate"><span class="pre">rrf</span></code> method instead of <code class="docutils literal notranslate"><span class="pre">get_context_union</span></code> to retrieve the final list of documents related to our original question (i.e., context).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.prompts</span> <span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    You are an intelligent assistant. Your task is to generate 4 questions based on the provided question in different wording and different perspectives to retrieve relevant documents from a vector database. By generating multiple perspectives on the user question, your goal is to help the user overcome some of the limitations of the distance-based similarity search. Provide these alternative questions separated by newlines. Original question: {question}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">generate_queries</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()}</span>
+    <span class="o">|</span> <span class="n">prompt</span>
+    <span class="o">|</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+    <span class="o">|</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+
+
+<span class="n">fusion_retrieval_chain</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()}</span>
+    <span class="o">|</span> <span class="n">generate_queries</span>
+    <span class="o">|</span> <span class="n">retriever</span><span class="o">.</span><span class="n">map</span><span class="p">()</span>
+    <span class="o">|</span> <span class="n">rrf</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fusion_retrieval_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What are the benefits of QLoRA?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(Document(page_content=&#39;technology. QLORAcan be seen as an equalizing factor that helps to close the resource gap between\nlarge corporations and small teams with consumer GPUs.\nAnother potential source of impact is deployment to mobile phones. We believe our QLORAmethod\nmight enable the critical milestone of enabling the finetuning of LLMs on phones and other low\nresource settings. While 7B models were shown to be able to be run on phones before, QLORAis&#39;, metadata={&#39;page&#39;: 15, &#39;source&#39;: &#39;data/QLoRA.pdf&#39;}),
+  0.11480532786885246),
+ (Document(page_content=&#39;Quantization to reduce the average memory footprint by quantizing the quantization\nconstants, and (c) Paged Optimizers to manage memory spikes. We use QLORA\nto finetune more than 1,000 models, providing a detailed analysis of instruction\nfollowing and chatbot performance across 8 instruction datasets, multiple model\ntypes (LLaMA, T5), and model scales that would be infeasible to run with regular\nfinetuning (e.g. 33B and 65B parameter models). Our results show that QLoRA&#39;, metadata={&#39;page&#39;: 0, &#39;source&#39;: &#39;data/QLoRA.pdf&#39;}),
+  0.11163114439324116),
+ (Document(page_content=&#39;All in all, we believe that QLORAwill have a broadly positive impact making the finetuning of high\nquality LLMs much more widely and easily accessible.\nAcknowledgements\nWe thank Aditya Kusupati, Ofir Press, Ashish Sharma, Margaret Li, Raphael Olivier, Zihao Ye, and\nEvangelia Spiliopoulou for their valuable feedback. Our research was facilitated by the advanced\ncomputational, storage, and networking infrastructure of the Hyak supercomputer system at the&#39;, metadata={&#39;page&#39;: 15, &#39;source&#39;: &#39;data/QLoRA.pdf&#39;}),
+  0.09631215742069787)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we format the context by considering only the page contents without meta data or re-ranking scores.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">format_context</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span> <span class="n">List</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">doc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">documents</span><span class="p">])</span>
+
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Asnwer the given question using the provided context.\n\nContext: {context}\n\nQuestion: {question}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">multi_query_chain</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;context&#39;</span><span class="p">:</span> <span class="n">fusion_retrieval_chain</span> <span class="o">|</span> <span class="n">format_context</span><span class="p">,</span> <span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()}</span>
+    <span class="o">|</span> <span class="n">prompt</span>
+    <span class="o">|</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">multi_query_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What are the benefits of QLoRA?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The benefits of QLoRA include reducing the average memory footprint by quantizing the quantization constants and managing memory spikes. It allows for the finetuning of more than 1,000 models and provides a detailed analysis of instruction following and chatbot performance across multiple datasets and model types. QLoRA can be seen as an equalizing factor that helps to close the resource gap between large corporations and small teams with consumer GPUs. It might also enable the critical milestone of enabling the finetuning of LLMs on phones and other low resource settings. QLoRA matches 16-bit performance across scales, tasks, and datasets, making the finetuning of high quality LLMs much more widely and easily accessible.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>After executing all the above cells, you will be able to see a LangSmith trace like <a class="reference external" href="https://smith.langchain.com/public/99c5fb68-0ccf-4508-a72d-7c3a7b5e61d2/r">this</a>.</p>
+</section>
+</section>
+<section id="query-decomposition">
+<h2><span class="section-number">2.2. </span>Query Decomposition<a class="headerlink" href="#query-decomposition" title="Link to this heading">#</a></h2>
+<p>In “Query Translation”, we focused on generating multiple questions from our original question with different perspectives (i.e., translate the query) to improve RAG. However, the generated questions all do have the same meaning despite the wording is different, since it is in fact translation. Therefore, the answers for all the questions are somewhat similar. As a result, while the multi-query approach helps avoid ambiguities of the user query by writing it in different ways, it will not help when the user query is complex (e.g., a long mathematical computation).</p>
+<p>As a solution we can break down (i.e., decompose) the original query into multiple sub-problems (like in recursion or dynamic programming) and answer each sub-problem sequentially/parallelly to derive the answer to our original query. This simplifies the prompts and increases the context for the retrieval process. We do that using “Query Decomposition”.</p>
+<section id="least-to-most-prompting">
+<h3><span class="section-number">2.2.1. </span>Least-to-Most Prompting<a class="headerlink" href="#least-to-most-prompting" title="Link to this heading">#</a></h3>
+<p>First let’s look at how to implement <a class="reference external" href="https://arxiv.org/pdf/2205.10625">Least-to-Most Prompting</a> to break down a complex query into subquestions and answer them recursively to derive the final answer.</p>
+<p>Similar to the multi-query and RAG fusion we first have generate a few questions based on our original questions. However our prompt should be different as we are generating sub questions by decomposing the original one, instead of generating the same question with different perspectives.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.prompts</span> <span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
+
+<span class="n">decompostion_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    You are a helpful assistant that can break down complex questions into simpler parts. \n</span>
+<span class="sd">        Your goal is to decompose the given question into multiple sub-questions that can be answerd in isolation to answer the main question in the end. \n</span>
+<span class="sd">        Provide these sub-questions separated by the newline character. \n</span>
+<span class="sd">        Original question: {question}\n</span>
+<span class="sd">        Output (3 queries): </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">query_generation_chain</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()}</span>
+    <span class="o">|</span> <span class="n">decompostion_prompt</span>
+    <span class="o">|</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+    <span class="o">|</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">questions</span> <span class="o">=</span> <span class="n">query_generation_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What are the benefits of QLoRA?&quot;</span><span class="p">)</span>
+<span class="n">questions</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;What is QLoRA?&#39;,
+ &#39;What are the features of QLoRA?&#39;,
+ &#39;How do these features of QLoRA provide benefits?&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>After generating the sub-questions, we iterate through them to answer them individually using the <code class="docutils literal notranslate"><span class="pre">least_to_most_chain</span></code>. We first extract the <code class="docutils literal notranslate"><span class="pre">question</span></code> from the user input using the <code class="docutils literal notranslate"><span class="pre">itemgetter</span></code> and provide it to our <code class="docutils literal notranslate"><span class="pre">retriever</span></code> to retrieve related documents as the <code class="docutils literal notranslate"><span class="pre">context</span></code>. <code class="docutils literal notranslate"><span class="pre">q_a_pairs</span></code> will also be provided as part of the user input. Then we populate our prompt and send to the LLM to get the answer. Each time we store the sub-question <code class="docutils literal notranslate"><span class="pre">Q_{n-1}</span></code> and its answer <code class="docutils literal notranslate"><span class="pre">A_{n-1}</span></code> since we provide them as the context to answer the question <code class="docutils literal notranslate"><span class="pre">Q_{n}</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+
+
+<span class="c1"># Create the final prompt template to answer the question with provided context and background Q&amp;A pairs</span>
+<span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Here is the question you need to answer:</span>
+
+<span class="se">\n</span><span class="s2"> --- </span><span class="se">\n</span><span class="s2"> </span><span class="si">{question}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> --- </span><span class="se">\n</span>
+
+<span class="s2">Here is any available background question + answer pairs:</span>
+
+<span class="se">\n</span><span class="s2"> --- </span><span class="se">\n</span><span class="s2"> </span><span class="si">{q_a_pairs}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> --- </span><span class="se">\n</span>
+
+<span class="s2">Here is additional context relevant to the question: </span>
+
+<span class="se">\n</span><span class="s2"> --- </span><span class="se">\n</span><span class="s2"> </span><span class="si">{context}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> --- </span><span class="se">\n</span>
+
+<span class="s2">Use the above context and any background question + answer pairs to answer the question: </span><span class="se">\n</span><span class="s2"> </span><span class="si">{question}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">least_to_most_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">template</span><span class="p">)</span> 
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">least_to_most_chain</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">{</span><span class="s1">&#39;context&#39;</span><span class="p">:</span> <span class="n">itemgetter</span><span class="p">(</span><span class="s1">&#39;question&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="n">retriever</span><span class="p">,</span>
+        <span class="s1">&#39;q_a_pairs&#39;</span><span class="p">:</span> <span class="n">itemgetter</span><span class="p">(</span><span class="s1">&#39;q_a_pairs&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">itemgetter</span><span class="p">(</span><span class="s1">&#39;question&#39;</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="o">|</span> <span class="n">least_to_most_prompt</span>
+        <span class="o">|</span> <span class="n">llm</span>
+        <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+    <span class="p">)</span>
+
+<span class="n">q_a_pairs</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">questions</span><span class="p">:</span>
+    
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">least_to_most_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span> <span class="s2">&quot;q_a_pairs&quot;</span><span class="p">:</span> <span class="n">q_a_pairs</span><span class="p">})</span>
+    <span class="n">q_a_pairs</span><span class="o">+=</span><span class="sa">f</span><span class="s2">&quot;Question: </span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">Answer: </span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After getting answers for the 3 generated sub-questions, finally we answer our original question by invoking the <code class="docutils literal notranslate"><span class="pre">least_to_most_chain</span></code> once again, but this time with the original question and all <code class="docutils literal notranslate"><span class="pre">q_a_pairs</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">least_to_most_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="s2">&quot;What are the benefits of QLoRA?&quot;</span><span class="p">,</span> <span class="s2">&quot;q_a_pairs&quot;</span><span class="p">:</span> <span class="n">q_a_pairs</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;The benefits of QLoRA include:\n\n1. Reduced Memory Footprint: QLoRA uses quantization to reduce the average memory footprint, allowing for more efficient memory usage. This is particularly beneficial for devices with limited memory resources.\n\n2. Management of Memory Spikes: QLoRA uses Paged Optimizers to manage memory spikes, ensuring smooth operation even when dealing with large datasets. This can prevent crashes or slowdowns due to memory overload.\n\n3. Model Fine-tuning: QLoRA&#39;s ability to finetune models, including large-scale models, allows for improved performance across a variety of tasks. This can lead to better results in areas such as instruction following and chatbot performance.\n\n4. Support for Multiple Model Types: QLoRA supports multiple model types, providing flexibility and versatility, allowing it to be used in a wide range of applications.\n\n5. Combination with Other Methods: QLoRA can be combined with other efficient adaptation methods, potentially providing orthogonal improvement. This means it can enhance the effectiveness of other methods, leading to better overall performance.\n\n6. Hyperparameter Search: QLoRA allows for a hyperparameter search over several variables, allowing for more precise and effective model tuning, leading to improved results.\n\n7. Accessibility: QLoRA is designed to make the process of finetuning large language models more tractable, even in low resource settings like phones. This makes it a useful tool for small teams with limited resources, helping to close the resource gap between large corporations and smaller teams. It also opens up the possibility of deploying high-quality language models on mobile devices, making this technology more widely accessible.&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The LangSmith trace for the original question answer will look like <a class="reference external" href="https://smith.langchain.com/public/7bd7f987-a53a-4d32-abb0-823940bc3f27/r">this</a>.</p>
+<p>Instead sequentially answering the sub-questions, we can use the LLM to answer them parallely and use those answers to derive the final answer to our main question.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="s1">&#39;rlm/rag-prompt&#39;</span><span class="p">)</span>
+<span class="n">prompt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ChatPromptTemplate(input_variables=[&#39;context&#39;, &#39;question&#39;], metadata={&#39;lc_hub_owner&#39;: &#39;rlm&#39;, &#39;lc_hub_repo&#39;: &#39;rag-prompt&#39;, &#39;lc_hub_commit_hash&#39;: &#39;50442af133e61576e74536c6556cefe1fac147cad032f4377b60c436e6cdcb6e&#39;}, messages=[HumanMessagePromptTemplate(prompt=PromptTemplate(input_variables=[&#39;context&#39;, &#39;question&#39;], template=&quot;You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don&#39;t know the answer, just say that you don&#39;t know. Use three sentences maximum and keep the answer concise.\nQuestion: {question} \nContext: {context} \nAnswer:&quot;))])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_and_answer</span><span class="p">(</span><span class="n">question</span><span class="p">):</span>
+    
+    <span class="n">questions</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="n">sub_questions</span> <span class="o">=</span> <span class="n">query_generation_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+    
+    <span class="n">sub_qa_chain</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">{</span><span class="s1">&#39;context&#39;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()</span> <span class="o">|</span> <span class="n">retriever</span><span class="p">,</span> <span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()}</span>
+        <span class="o">|</span> <span class="n">prompt</span>
+        <span class="o">|</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+    <span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">sub_questions</span><span class="p">:</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="n">sub_qa_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">questions</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="n">answer</span><span class="p">})</span>
+        
+    <span class="k">return</span> <span class="n">questions</span>
+        
+<span class="n">qa_pairs</span> <span class="o">=</span> <span class="n">generate_and_answer</span><span class="p">(</span><span class="s2">&quot;What are the benefits of QLoRA?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">format_qa_pairs</span><span class="p">(</span><span class="n">qa_pairs</span><span class="p">):</span>
+    
+    <span class="n">formatted_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">qa</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">qa_pairs</span><span class="p">):</span>
+        <span class="n">formatted_string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;Question </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">qa</span><span class="p">[</span><span class="s1">&#39;question&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Answer </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">qa</span><span class="p">[</span><span class="s1">&#39;answer&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">formatted_string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="n">context</span> <span class="o">=</span> <span class="n">format_qa_pairs</span><span class="p">(</span><span class="n">qa_pairs</span><span class="p">)</span>
+
+<span class="c1"># Prompt</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Consider the following Question and Answer Pairs:</span>
+
+<span class="sd">    {context}</span>
+
+<span class="sd">    Use these to synthesize an answer to the question: {question}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">final_rag_chain</span> <span class="o">=</span> <span class="p">(</span>
+     <span class="n">prompt</span>
+    <span class="o">|</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">final_rag_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s1">&#39;context&#39;</span><span class="p">:</span> <span class="n">context</span><span class="p">,</span> <span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="s2">&quot;What are the benefits of QLoRA?&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;The benefits of QLoRA include its ability to provide detailed analysis of instruction following and chatbot performance across various instruction datasets and model types. It serves as an equalizing factor that helps to close the resource gap between large corporations and small teams with consumer GPUs. It also enables the fine-tuning of large language models on phones and other low resource settings. QLoRA&#39;s features such as quantization and paged optimizers reduce the average memory footprint and manage memory spikes, making it possible to fine-tune large-scale models that would be infeasible to run with regular fine-tuning. Furthermore, QLoRA can provide orthogonal improvement when combined with other efficient adaptation methods and makes it more tractable to understand how features learned during pre-training are transformed to perform well on downstream tasks. Lastly, it offers major computational benefits by allowing users to pre-compute an expensive representation of the training data once and then run many experiments with cheaper models on top of this representation.&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The LangSmith trace for answering the original question will look like <a class="reference external" href="https://smith.langchain.com/public/d5a17200-7752-42cb-87b9-146959e691bc/r">this</a>.</p>
+</section>
+<section id="step-back-prompting">
+<h3><span class="section-number">2.2.2. </span>Step back prompting<a class="headerlink" href="#step-back-prompting" title="Link to this heading">#</a></h3>
+<p><a class="reference external" href="https://arxiv.org/pdf/2310.06117">Step back prompting</a> allows LLMs to step back through in-context learning – prompting them to derive high-level abstractions such as concepts and principles for a specific example (i.e., Abstraction). Then, grounded on the documents regarding the high-level concept or principle, the LLM can reason about the solution to the original question (i.e., Reasoning).</p>
+<p>E.g., If the original question is “What happens to the pressure, P, of an ideal gas if the temperature is increased by a factor of 2 and the volume is increased by a factor of 8?”, a possible step-back question would be “What are the physics principles behind this question?”. Then the context (i.e., documents) retrieved for the step-back question will be used as additional context to answer the original question.</p>
+<p>To generate such step-back questions, we use few-shot learning to provide a few examples of (question, step-back question) pairs to the LLM.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_core.prompts</span> <span class="kn">import</span> <span class="n">ChatPromptTemplate</span><span class="p">,</span> <span class="n">FewShotChatMessagePromptTemplate</span>
+
+<span class="n">examples</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="s1">&#39;What happens to the pressure, P, of an ideal gas if the temperature is increased by a factor of 2 and the volume is increased by a factor of 8?&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="s1">&#39;What are the physics principles behind this question?&#39;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="s1">&#39;Estella Leopold went to which school between Aug 1954 and Nov 1954?&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="s2">&quot;What was Estella Leopold&#39;s education history?&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+<span class="n">example_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_messages</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;human&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{input}</span><span class="s1">&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;ai&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{output}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+<span class="n">few_shot_prompt</span> <span class="o">=</span> <span class="n">FewShotChatMessagePromptTemplate</span><span class="p">(</span>
+    <span class="n">examples</span><span class="o">=</span><span class="n">examples</span><span class="p">,</span>
+            <span class="c1"># This is a prompt template used to format each individual example.</span>
+    <span class="n">example_prompt</span><span class="o">=</span><span class="n">example_prompt</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">final_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_messages</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;&quot;You are an expert at world knowledge. Your task is to step back and paraphrase a question to a more generic step-back question, which is easier to answer. Here are a few examples:&quot;&quot;&quot;</span><span class="p">),</span>
+                <span class="n">few_shot_prompt</span><span class="p">,</span>
+                <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{question}</span><span class="s1">&#39;</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+<span class="n">final_prompt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">question</span><span class="o">=</span> <span class="s2">&quot;What are the benefits of QLoRA?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;System: You are an expert at world knowledge. Your task is to step back and paraphrase a question to a more generic step-back question, which is easier to answer. Here are a few examples:\nHuman: What happens to the pressure, P, of an ideal gas if the temperature is increased by a factor of 2 and the volume is increased by a factor of 8?\nAI: What are the physics principles behind this question?\nHuman: Estella Leopold went to which school between Aug 1954 and Nov 1954?\nAI: What was Estella Leopold&#39;s education history?\nHuman: What are the benefits of QLoRA?&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we use the created few-shot prompt to generate the step-back question through a chain.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_back_query_chain</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()}</span>
+    <span class="o">|</span> <span class="n">final_prompt</span> 
+    <span class="o">|</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span> 
+    <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+    <span class="p">)</span>
+
+<span class="n">step_back_query_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What are the optimal parameters for QLoRA?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;What factors should be considered when setting parameters for a QLoRA system?&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we use both the context retrieved for the original question and the context retrieved for the step-back question to answer our original question via the <code class="docutils literal notranslate"><span class="pre">step_back_chain</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">response_prompt_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;You are an expert of world knowledge. </span>
+<span class="s2">I am going to ask you a question. Your response should be comprehensive and not contradicted with the following context if they are relevant. </span>
+<span class="s2">Otherwise, ignore them if they are not relevant.</span>
+
+<span class="s2"># </span><span class="si">{normal_context}</span>
+<span class="s2"># </span><span class="si">{step_back_context}</span>
+
+<span class="s2"># Original Question: </span><span class="si">{question}</span>
+<span class="s2"># Answer:&quot;&quot;&quot;</span>
+<span class="n">response_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">response_prompt_template</span><span class="p">)</span>
+
+<span class="n">step_back_chain</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;normal_context&#39;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()</span> <span class="o">|</span> <span class="n">retriever</span><span class="p">,</span>
+     <span class="s1">&#39;step_back_context&#39;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()</span> <span class="o">|</span> <span class="n">step_back_query_chain</span> <span class="o">|</span> <span class="n">retriever</span><span class="p">,</span>
+     <span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">RunnablePassthrough</span><span class="p">()</span>
+     <span class="p">}</span>
+    <span class="o">|</span> <span class="n">response_prompt</span>
+    <span class="o">|</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_back_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;What are the optimal parameters for QLoRA?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The optimal parameters for QLoRA are determined through a hyperparameter search over the following variables: LoRA dropout with values { 0.0, 0.05, 0.1}, LoRA r with values { 8, 16, 32, 64, 128, 256}, and LoRA layers which can be {key+query, all attention layers, all FFN layers, all layers, attention + FFN output layers}. The LoRA α is kept fixed and the learning rate is searched, as LoRA α is always proportional to the learning rate.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The LangSmith trace for the implemented step-back prompting chain will look like <a class="reference external" href="https://smith.langchain.com/public/425c098b-47ae-4f53-9259-8cd6b567a2b0/r">this</a>.</p>
+<p>In this notebook, we looked at ways to improve the LLMs answers to a user query through the “Query Transformation”. In summary, query transformation may help us to remove ambiguities of the user query and simplify it through techniques such as ,</p>
+<ul class="simple">
+<li><p><strong>Multi-query</strong>: That re-writes the question in different perspectives (i.e., sub-questions).</p></li>
+<li><p><strong>RAG Fusion</strong>: That not only re-writes the question in different perspectives, but also rank the documents retrieved for each sub-question to provide the most relevant information to answer the original question.</p></li>
+<li><p><strong>Least-to-Most Prompting</strong>: That helps break-down complex questions into mutiple sub problems and answer the final question using the sub problems and their answers as the context.</p></li>
+<li><p><strong>Step-back Prompting</strong>: That generates a step-back question and use the retrieved documents for that step-back question as the additional context to answer the original question.</p></li>
+</ul>
+<p>In the next section, we will  generate Hypothetical Documents, instead of questions to help LLMs answer questions more accurately through <a class="reference external" href="https://arxiv.org/pdf/2212.10496">HyDE</a> (Hypothetical Document Embeddings).</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1_Intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>Introduction to RAG with Langchain</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3_HyDE.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>HyDE (Hypothetical Document Embeddings)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#query-translation">2.1. Query Translation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-query">2.1.1. Multi-Query</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rag-fusion">2.1.2. RAG Fusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#query-decomposition">2.2. Query Decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#least-to-most-prompting">2.2.1. Least-to-Most Prompting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-back-prompting">2.2.2. Step back prompting</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sakuna Jayasundara
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

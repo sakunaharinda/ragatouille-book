@@ -1,0 +1,1430 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>10. Putting it all together with Neo4J &#8212; Ragatouille</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '10_Final';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="9. Generation II" href="9_Generation_2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo2.png" class="logo__image only-light" alt="Ragatouille - Home"/>
+    <script>document.write(`<img src="_static/logo2.png" class="logo__image only-dark" alt="Ragatouille - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Learn RAG with Langchain 🦜⛓️‍💥
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_Intro.html">1. Introduction to RAG with Langchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Query_Transformation.html">2. Query Transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_HyDE.html">3. HyDE (Hypothetical Document Embeddings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Routing.html">4. Routing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_Query_Construction.html">5. Query Construction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_Indexing.html">6. Indexing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Retrieval.html">7. Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_Generation.html">8. Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_Generation_2.html">9. Generation II</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">10. Putting it all together with Neo4J</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book/edit/master/docs/10_Final.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sakunaharinda/ragatouille-book/issues/new?title=Issue%20on%20page%20%2F10_Final.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/10_Final.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Putting it all together with Neo4J</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="putting-it-all-together-with-neo4j">
+<h1><span class="section-number">10. </span>Putting it all together with Neo4J<a class="headerlink" href="#putting-it-all-together-with-neo4j" title="Link to this heading">#</a></h1>
+<p>In this section we put everything we learned in previous sections into practice by creating an LLM agent that will answer user questions about a hospital. To do that we use two datasources: a Neo4J vector indices that contains documents on user reviews of different hospitals and a Neo4J graph database containing the information about those hospitals, visits, doctors, payments, etc. Our RAG pipeline will be correctly re-direct the user query to each datasource and will answer the question in the end. Let’s begin!</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><img alt="arag" src="_images/final.png" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><em>RAG based hospital informtion system</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> dotenv
+<span class="o">%</span><span class="k">dotenv</span> secrets/secrets.env
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">langchain.prompts</span> <span class="kn">import</span> <span class="n">PromptTemplate</span>
+<span class="kn">from</span> <span class="nn">langchain_core.output_parsers</span> <span class="kn">import</span> <span class="n">StrOutputParser</span>
+<span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span><span class="p">,</span> <span class="n">OpenAIEmbeddings</span>
+<span class="kn">from</span> <span class="nn">langchain.pydantic_v1</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+<span class="kn">from</span> <span class="nn">langchain.prompts</span> <span class="kn">import</span> <span class="n">ChatPromptTemplate</span>
+<span class="kn">from</span> <span class="nn">langchain</span> <span class="kn">import</span> <span class="n">hub</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span>
+<span class="kn">from</span> <span class="nn">neo4j</span> <span class="kn">import</span> <span class="n">GraphDatabase</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;LANGCHAIN_PROJECT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hospital-system&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we use a processed Kaggle dataset by <a class="reference external" href="https://github.com/hfhoffman1144">Harrison Hoffman</a>. The processed dataset contains 6 <code class="docutils literal notranslate"><span class="pre">.csv</span></code> files.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">hospitals.csv</span></code>: Contains the names of the hospitals, the state that the hospital is located, and a unique id.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">physicians.csv</span></code>: Contains information about physicians including their names, date of birth, graduation year, medical school, and salary.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">payers.csv</span></code>: Contains names and unique ids of five different insuarance companies that paid bills of patients.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">patients.csv</span></code>: Contains information about patients and their sex, date of birth, blood type, identified by a unique id.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">visits.csv</span></code>: This file connects all the mentioned files with infomation about each patient’s visits, date of admission, billing amount, room number, admission type, discharge date, test results, visit id, physician id,payer id, hospital id, chief complaint, treatment description, primary diagnosis, and visit status.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reviews.csv</span></code>: Contains user reviews posted by patients in their respective vists treated by a physician in a hospital.</p></li>
+</ul>
+<p>Next we use the above CSV files and relationships between them are used to create a Neo4J graph in <a class="reference external" href="https://neo4j.com/cloud/platform/aura-graph-database/?utm_source=Google&amp;amp;utm_medium=PaidSearch&amp;amp;utm_campaign=Evergreen&amp;amp;utm_content=APAC-Search-SEMBrand-Evergreen-None-SEM-SEM-NonABM&amp;amp;utm_term=auradb&amp;amp;utm_adgroup=auradb&amp;amp;gad_source=1&amp;amp;gclid=Cj0KCQjw6auyBhDzARIsALIo6v-fHIGNfhxYHr6ZxUpuoE-wSFEfJHw93acnry6XSQ5JTZKMlJ84ojQaAthHEALw_wcB">Neo4J AuraDB</a>. You can create an account for free and create a DB instance hosted in GCP. You have to download the login information need for authentication through neo4j python library and langchain. The login information should contain:</p>
+<ul class="simple">
+<li><p>NEO4J_URI</p></li>
+<li><p>NEO4J_USERNAME</p></li>
+<li><p>NEO4J_PASSWORD</p></li>
+<li><p>AURA_INSTANCEID</p></li>
+<li><p>AURA_INSTANCENAME</p></li>
+</ul>
+<p>The graph we are going to build is as follows.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><img alt="arag" src="_images/graph.png" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><em>Neo4J Graph for the hospital information system</em></p></td>
+</tr>
+</tbody>
+</table>
+<p>Each circle represents a “Node” and each arrow represents a “Relationship”.</p>
+<p>For instance, each <em>Patient</em> <strong>HAS</strong> a <em>Visit</em> <strong>AT</strong> a <em>Hospital</em> that <strong>EMPLOYS</strong> a <em>Physician</em> who <strong>TREATS</strong> in a <em>Visit</em> <strong>COVERED_BY</strong> a <em>Payer</em>. A <em>Patient</em> who completed a <em>Visit</em> <strong>WRITES</strong> a <em>Review</em> in the end.</p>
+<p>Now, we create the aforementioned nodes and relationships between them (i.e., the graph) in AuraDB using the <a class="reference external" href="https://neo4j.com/product/cypher-graph-query-language/?utm_source=Google&amp;amp;utm_medium=PaidSearch&amp;amp;utm_campaign=Evergreen&amp;amp;utm_content=AMS-Search-SEMBrand-Evergreen-None-SEM-SEM-NonABM&amp;amp;utm_term=cypher%20query%20language&amp;amp;utm_adgroup=cypher-language&amp;amp;gad_source=1&amp;amp;gclid=Cj0KCQjw6auyBhDzARIsALIo6v9vwpW2dCruoed6H21Hsv12uccW6jF9oAgfqPKAgzeN27_8Xnm6ecEaAk9LEALw_wcB">Cypher query language</a>, and populate it with the information in CSV files.</p>
+<div class="tip admonition">
+<p class="admonition-title">See also</p>
+<p>For more information about the Cypher Query Language refer the <a class="reference external" href="https://neo4j.com/product/cypher-graph-query-language/?utm_source=Google&amp;amp;utm_medium=PaidSearch&amp;amp;utm_campaign=Evergreen&amp;amp;utm_content=AMS-Search-SEMBrand-Evergreen-None-SEM-SEM-NonABM&amp;amp;utm_term=cypher%20query%20language&amp;amp;utm_adgroup=cypher-language&amp;amp;gad_source=1&amp;amp;gclid=Cj0KCQjw6auyBhDzARIsALIo6v9vwpW2dCruoed6H21Hsv12uccW6jF9oAgfqPKAgzeN27_8Xnm6ecEaAk9LEALw_wcB">documentation</a>. Python SDK documentation can be found <a class="reference external" href="https://neo4j.com/docs/python-manual/current/">here</a>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NODES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Hospital&quot;</span><span class="p">,</span> <span class="s2">&quot;Payer&quot;</span><span class="p">,</span> <span class="s2">&quot;Physician&quot;</span><span class="p">,</span> <span class="s2">&quot;Patient&quot;</span><span class="p">,</span> <span class="s2">&quot;Visit&quot;</span><span class="p">,</span> <span class="s2">&quot;Reviews&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">_set_uniqueness_constraints</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;CREATE CONSTRAINT IF NOT EXISTS FOR (n:</span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2">)</span>
+<span class="s2">        REQUIRE n.id IS UNIQUE;&quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">tx</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+    
+
+<span class="n">driver</span> <span class="o">=</span> <span class="n">GraphDatabase</span><span class="o">.</span><span class="n">driver</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;NEO4J_URI&#39;</span><span class="p">),</span>
+    <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;NEO4J_USERNAME&#39;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;NEO4J_PASSWORD&#39;</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">NODES</span><span class="p">:</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">execute_write</span><span class="p">(</span><span class="n">_set_uniqueness_constraints</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HOSPITALS</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/sakunaharinda/ragatouille/main/data/hospitals.csv&quot;</span>
+
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS</span>
+<span class="s2">    FROM &#39;</span><span class="si">{</span><span class="n">HOSPITALS</span><span class="si">}</span><span class="s2">&#39; AS hospitals</span>
+<span class="s2">    MERGE (h:Hospital </span><span class="se">{{</span><span class="s2">id: toInteger(hospitals.hospital_id),</span>
+<span class="s2">                            name: hospitals.hospital_name,</span>
+<span class="s2">                            state_name: hospitals.hospital_state</span><span class="se">}}</span><span class="s2">);</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PAYERS</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/sakunaharinda/ragatouille/main/data/payers.csv&quot;</span>
+
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS</span>
+<span class="s2">    FROM &#39;</span><span class="si">{</span><span class="n">PAYERS</span><span class="si">}</span><span class="s2">&#39; AS payers</span>
+<span class="s2">    MERGE (p:Payer </span><span class="se">{{</span><span class="s2">id: toInteger(payers.payer_id),</span>
+<span class="s2">    name: payers.payer_name</span><span class="se">}}</span><span class="s2">);</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PHYSICIANS</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/sakunaharinda/ragatouille/main/data/physicians.csv&quot;</span>
+
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS</span>
+<span class="s2">    FROM &#39;</span><span class="si">{</span><span class="n">PHYSICIANS</span><span class="si">}</span><span class="s2">&#39; AS physicians</span>
+<span class="s2">    MERGE (p:Physician </span><span class="se">{{</span><span class="s2">id: toInteger(physicians.physician_id),</span>
+<span class="s2">                        name: physicians.physician_name,</span>
+<span class="s2">                        dob: physicians.physician_dob,</span>
+<span class="s2">                        grad_year: physicians.physician_grad_year,</span>
+<span class="s2">                        school: physicians.medical_school,</span>
+<span class="s2">                        salary: toFloat(physicians.salary)</span>
+<span class="s2">                        </span><span class="se">}}</span><span class="s2">);</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">VISITS</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/sakunaharinda/ragatouille/main/data/visits.csv&quot;</span>
+
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS FROM &#39;</span><span class="si">{</span><span class="n">VISITS</span><span class="si">}</span><span class="s2">&#39; AS visits</span>
+<span class="s2">    MERGE (v:Visit </span><span class="se">{{</span><span class="s2">id: toInteger(visits.visit_id),</span>
+<span class="s2">                        room_number: toInteger(visits.room_number),</span>
+<span class="s2">                        admission_type: visits.admission_type,</span>
+<span class="s2">                        admission_date: visits.date_of_admission,</span>
+<span class="s2">                        test_results: visits.test_results,</span>
+<span class="s2">                        status: visits.visit_status</span>
+<span class="s2">    </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">        ON CREATE SET v.chief_complaint = visits.chief_complaint</span>
+<span class="s2">        ON MATCH SET v.chief_complaint = visits.chief_complaint</span>
+<span class="s2">        ON CREATE SET v.treatment_description = visits.treatment_description</span>
+<span class="s2">        ON MATCH SET v.treatment_description = visits.treatment_description</span>
+<span class="s2">        ON CREATE SET v.diagnosis = visits.primary_diagnosis</span>
+<span class="s2">        ON MATCH SET v.diagnosis = visits.primary_diagnosis</span>
+<span class="s2">        ON CREATE SET v.discharge_date = visits.discharge_date</span>
+<span class="s2">        ON MATCH SET v.discharge_date = visits.discharge_date</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PATIENTS</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/sakunaharinda/ragatouille/main/data/patients.csv&quot;</span>
+
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS</span>
+<span class="s2">    FROM &#39;</span><span class="si">{</span><span class="n">PATIENTS</span><span class="si">}</span><span class="s2">&#39; AS patients</span>
+<span class="s2">    MERGE (p:Patient </span><span class="se">{{</span><span class="s2">id: toInteger(patients.patient_id),</span>
+<span class="s2">                    name: patients.patient_name,</span>
+<span class="s2">                    sex: patients.patient_sex,</span>
+<span class="s2">                    dob: patients.patient_dob,</span>
+<span class="s2">                    blood_type: patients.patient_blood_type</span>
+<span class="s2">                    </span><span class="se">}}</span><span class="s2">);</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">REVIEWS</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/sakunaharinda/ragatouille/main/data/reviews.csv&quot;</span>
+
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        LOAD CSV WITH HEADERS</span>
+<span class="s2">        FROM &#39;</span><span class="si">{</span><span class="n">REVIEWS</span><span class="si">}</span><span class="s2">&#39; AS reviews</span>
+<span class="s2">        MERGE (r:Review </span><span class="se">{{</span><span class="s2">id: toInteger(reviews.review_id),</span>
+<span class="s2">                         text: reviews.review,</span>
+<span class="s2">                         patient_name: reviews.patient_name,</span>
+<span class="s2">                         physician_name: reviews.physician_name,</span>
+<span class="s2">                         hospital_name: reviews.hospital_name</span>
+<span class="s2">                        </span><span class="se">}}</span><span class="s2">);</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After the nodes are populated, then we create relationships namely <code class="docutils literal notranslate"><span class="pre">AT</span></code>, <code class="docutils literal notranslate"><span class="pre">HAS</span></code>, <code class="docutils literal notranslate"><span class="pre">COVERED_BY</span></code>, <code class="docutils literal notranslate"><span class="pre">EMPLOYS</span></code>, <code class="docutils literal notranslate"><span class="pre">TREATS</span></code>, and <code class="docutils literal notranslate"><span class="pre">WRITES</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS FROM &#39;</span><span class="si">{</span><span class="n">VISITS</span><span class="si">}</span><span class="s2">&#39; AS visits</span>
+<span class="s2">    MATCH (source: `Visit` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(trim(visits.visit_id)) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MATCH (target: `Hospital` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(trim(visits.hospital_id))</span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MERGE (source)-[r: `AT`]-&gt;(target)</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+    
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS FROM &#39;</span><span class="si">{</span><span class="n">VISITS</span><span class="si">}</span><span class="s2">&#39; AS visits</span>
+<span class="s2">    MATCH (source: `Patient` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(visits.patient_id) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MATCH (target: `Visit` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(visits.visit_id) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MERGE (source)-[: `HAS`]-&gt;(target)</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+    
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS FROM &#39;</span><span class="si">{</span><span class="n">VISITS</span><span class="si">}</span><span class="s2">&#39; AS visits</span>
+<span class="s2">    MATCH (source: `Visit` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(visits.visit_id) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MATCH (target: `Payer` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(visits.payer_id) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MERGE (source)-[covered_by: `COVERED_BY`]-&gt;(target)</span>
+<span class="s2">    ON CREATE SET</span>
+<span class="s2">        covered_by.service_date = visits.discharge_date,</span>
+<span class="s2">        covered_by.billing_amount = toFloat(visits.billing_amount) </span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+    
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS FROM &#39;</span><span class="si">{</span><span class="n">VISITS</span><span class="si">}</span><span class="s2">&#39; AS visits</span>
+<span class="s2">    MATCH (source: `Hospital` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(visits.hospital_id) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MATCH (target: `Physician` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(visits.physician_id) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MERGE (source)-[: `EMPLOYS`]-&gt;(target)</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+    
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS FROM &#39;</span><span class="si">{</span><span class="n">VISITS</span><span class="si">}</span><span class="s2">&#39; AS visits</span>
+<span class="s2">    MATCH (source: `Physician` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(visits.physician_id) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MATCH (target: `Visit` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(visits.visit_id) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MERGE (source)-[: `TREATS`]-&gt;(target)</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+    
+<span class="k">with</span> <span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;neo4j&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    LOAD CSV WITH HEADERS FROM &#39;</span><span class="si">{</span><span class="n">REVIEWS</span><span class="si">}</span><span class="s2">&#39; AS reviews</span>
+<span class="s2">    MATCH (source: `Visit` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(reviews.visit_id) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MATCH (target: `Review` </span><span class="se">{{</span><span class="s2"> `id`: toInteger(reviews.review_id) </span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">    MERGE (source)-[: `WRITES`]-&gt;(target)</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After creating our graph, you will be able to see all the nodes and relationships in the AuraDB dashboard. Also you can execute Cypher queries against your graph and get results.</p>
+<p>For instance, if you want to know the total number visits in all hospitals in Texas that were paid by the company “Cigna” and the total billing amount, you can execute,</p>
+<div class="highlight-cypher notranslate"><div class="highlight"><pre><span></span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">:</span><span class="n">Payer</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Cigna&quot;</span><span class="p">})</span><span class="o">&lt;-[</span><span class="n">c</span><span class="p">:</span><span class="n">COVERED_BY</span><span class="o">]-</span><span class="p">(:</span><span class="n">Visit</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">AT</span><span class="o">]-&gt;</span><span class="p">(:</span><span class="n">Hospital</span><span class="w"> </span><span class="p">{</span><span class="n">state_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;TX&quot;</span><span class="p">})</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">COUNT</span><span class="p">(*)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">num_visits</span><span class="p">,</span><span class="w"> </span><span class="n">SUM</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">billing_amount</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">total_amount</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Your result can be seen as follows in the AuraDB dashboard.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><img alt="arag" src="_images/auradb.png" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><em>Cypher query execution against the built graph</em></p></td>
+</tr>
+</tbody>
+</table>
+<p>After we are satisfied with the graph, we can then create a <code class="docutils literal notranslate"><span class="pre">Neo4jVector</span></code> index through langchain to embedd the user reviews (which is a node in the graph) with properties <code class="docutils literal notranslate"><span class="pre">review</span></code>, <code class="docutils literal notranslate"><span class="pre">physician_name</span></code>, <code class="docutils literal notranslate"><span class="pre">hospital_name</span></code>, <code class="docutils literal notranslate"><span class="pre">patient_name</span></code>. Vector search indices were released as a public beta in Neo4j 5.11. They allow you to run semantic queries directly on your graph. This is really convenient for your chatbot because you can store review embeddings in the same place as your structured hospital system data. Here we have to provide the  <code class="docutils literal notranslate"><span class="pre">node_label</span></code> that we are going to embed, a name to the index, and the <code class="docutils literal notranslate"><span class="pre">embedding</span></code> in addition to the information required for authentication (<code class="docutils literal notranslate"><span class="pre">username</span></code>, <code class="docutils literal notranslate"><span class="pre">password</span></code>, and <code class="docutils literal notranslate"><span class="pre">url</span></code>). Finally we can create the retriever as we have done many times earlier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.vectorstores.neo4j_vector</span> <span class="kn">import</span> <span class="n">Neo4jVector</span>
+
+<span class="n">neo4j_vector_index</span> <span class="o">=</span> <span class="n">Neo4jVector</span><span class="o">.</span><span class="n">from_existing_graph</span><span class="p">(</span>
+    <span class="n">embedding</span><span class="o">=</span><span class="n">OpenAIEmbeddings</span><span class="p">(),</span>
+    <span class="n">username</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;NEO4J_USERNAME&#39;</span><span class="p">),</span>
+    <span class="n">password</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;NEO4J_PASSWORD&#39;</span><span class="p">),</span>
+    <span class="n">url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;NEO4J_URI&#39;</span><span class="p">),</span>
+    <span class="n">node_label</span><span class="o">=</span><span class="s2">&quot;Review&quot;</span><span class="p">,</span>
+    <span class="n">index_name</span><span class="o">=</span><span class="s2">&quot;review_vector_index&quot;</span><span class="p">,</span>
+    <span class="n">text_node_properties</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;review&quot;</span><span class="p">,</span> <span class="s2">&quot;physician_name&quot;</span><span class="p">,</span> <span class="s2">&quot;hospital_name&quot;</span><span class="p">,</span> <span class="s2">&quot;patient_name&quot;</span>
+    <span class="p">],</span>
+    <span class="n">embedding_node_property</span><span class="o">=</span><span class="s2">&quot;embedding&quot;</span>
+<span class="p">)</span>
+
+<span class="n">review_retriever</span> <span class="o">=</span> <span class="n">neo4j_vector_index</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we can create our <code class="docutils literal notranslate"><span class="pre">qa_chain</span></code> that answers the user questions based on the given cypher query results or user reviews. Here note that, we do not need to execute any cypher query as we do not need to directly query a particular review, but use the results from the query or reviews collectively to answer a question.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;What have patients said about hospital efficiency?&quot;</span>
+
+
+<span class="c1"># review_template = &quot;&quot;&quot;</span>
+<span class="c1"># You are an assistant for answering questions based on the user reviews about an hospital.</span>
+<span class="c1">#     Use the following pieces of retrieved context to answer the question. </span>
+<span class="c1">#     Be detailed as possible. </span>
+<span class="c1">#     If you don&#39;t know the answer, just say that you don&#39;t know.</span>
+<span class="c1">#     \nQuestion: {question} \nContext: {context} \nAnswer:&quot;</span>
+<span class="c1"># &quot;&quot;&quot;</span>
+
+<span class="n">qa_prompt</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="s2">&quot;rlm/rag-prompt&quot;</span><span class="p">)</span><span class="c1">#</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">qa_chain</span> <span class="o">=</span> <span class="n">qa_prompt</span> <span class="o">|</span> <span class="n">llm</span> <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+
+<span class="n">docs</span> <span class="o">=</span> <span class="n">review_retriever</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+
+<span class="n">qa_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="n">docs</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Patients have given mixed reviews about hospital efficiency. They appreciated the caring nursing staff, professionalism of doctors, and clean environment. However, they were disappointed with the lack of vegetarian options, lack of communication about treatment plans, constant interruptions during the night, and confusing administrative processes.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we create the chain that generates a cypher query based on the user question, that can be used to extract information from the graph database. To do that we use langchain’s <code class="docutils literal notranslate"><span class="pre">GraphCypherQAChain</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.chains</span> <span class="kn">import</span> <span class="n">GraphCypherQAChain</span>
+<span class="kn">from</span> <span class="nn">langchain_community.graphs</span> <span class="kn">import</span> <span class="n">Neo4jGraph</span>
+
+<span class="n">graph</span> <span class="o">=</span> <span class="n">Neo4jGraph</span><span class="p">(</span><span class="n">enhanced_schema</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can visualize the graph’s schema, which acts as the context when translating natural language questions into Cypher queries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph</span><span class="o">.</span><span class="n">refresh_schema</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Node properties:
+- **Hospital**
+  - `id: INTEGER` Min: 0, Max: 29
+  - `name: STRING` Example: &quot;Wallace-Hamilton&quot;
+  - `state_name: STRING` Available options: [&#39;CO&#39;, &#39;NC&#39;, &#39;FL&#39;, &#39;GA&#39;, &#39;TX&#39;]
+- **Payer**
+  - `id: INTEGER` Min: 0, Max: 4
+  - `name: STRING` Available options: [&#39;Medicaid&#39;, &#39;UnitedHealthcare&#39;, &#39;Aetna&#39;, &#39;Cigna&#39;, &#39;Blue Cross&#39;]
+- **Physician**
+  - `id: INTEGER` Min: 0, Max: 499
+  - `name: STRING` Example: &quot;Joseph Johnson&quot;
+  - `school: STRING` Example: &quot;Johns Hopkins University School of Medicine&quot;
+  - `dob: STRING` Example: &quot;1970-02-22&quot;
+  - `grad_year: STRING` Example: &quot;2000-02-22&quot;
+  - `salary: FLOAT` Min: 198347.15752030822, Max: 394259.00931863394
+- **Patient**
+  - `id: INTEGER` Min: 0, Max: 9999
+  - `name: STRING` Example: &quot;Tiffany Ramirez&quot;
+  - `dob: STRING` Example: &quot;1994-10-06&quot;
+  - `blood_type: STRING` Available options: [&#39;O+&#39;, &#39;A-&#39;, &#39;O-&#39;, &#39;AB+&#39;, &#39;A+&#39;, &#39;B-&#39;, &#39;AB-&#39;, &#39;B+&#39;]
+  - `sex: STRING` Available options: [&#39;Female&#39;, &#39;Male&#39;]
+- **Visit**
+  - `id: INTEGER` Min: 0, Max: 9999
+  - `admission_date: STRING` Example: &quot;2022-11-17&quot;
+  - `room_number: INTEGER` Min: 101, Max: 500
+  - `admission_type: STRING` Available options: [&#39;Elective&#39;, &#39;Emergency&#39;, &#39;Urgent&#39;]
+  - `test_results: STRING` Available options: [&#39;Inconclusive&#39;, &#39;Normal&#39;, &#39;Abnormal&#39;]
+  - `status: STRING` Available options: [&#39;DISCHARGED&#39;, &#39;OPEN&#39;]
+  - `discharge_date: STRING` Example: &quot;2022-12-01&quot;
+  - `chief_complaint: STRING` Example: &quot;Persistent cough and shortness of breath&quot;
+  - `treatment_description: STRING` Example: &quot;Prescribed a combination of inhaled bronchodilator&quot;
+  - `diagnosis: STRING` Example: &quot;J45.909 - Unspecified asthma, uncomplicated&quot;
+- **Review**
+  - `id: INTEGER` Min: 0, Max: 1004
+  - `physician_name: STRING` Example: &quot;Laura Brown&quot;
+  - `patient_name: STRING` Example: &quot;Christy Johnson&quot;
+  - `text: STRING` Example: &quot;The medical staff at the hospital were incredibly &quot;
+  - `hospital_name: STRING` Example: &quot;Wallace-Hamilton&quot;
+Relationship properties:
+- **COVERED_BY**
+  - `service_date: STRING` Example: &quot;2019-01-13&quot;
+  - `billing_amount: FLOAT` Example: &quot;48391.14147288998&quot;
+The relationships:
+(:Hospital)-[:EMPLOYS]-&gt;(:Physician)
+(:Hospital)-[:COVERED_BY]-&gt;(:Physician)
+(:Physician)-[:TREATS]-&gt;(:Visit)
+(:Patient)-[:HAS]-&gt;(:Visit)
+(:Visit)-[:AT]-&gt;(:Hospital)
+(:Visit)-[:COVERED_BY]-&gt;(:Payer)
+(:Visit)-[:WRITES]-&gt;(:Review)
+</pre></div>
+</div>
+</div>
+</div>
+<p>To assist the LLM in generating correct Cypher query we also can provide a few-shot prompt (<code class="docutils literal notranslate"><span class="pre">cypher_generation_prompt</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cypher_generation_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Task:</span>
+<span class="s2">    Generate Cypher query for a Neo4j graph database.</span>
+
+<span class="s2">    Instructions:</span>
+<span class="s2">    Use only the provided relationship types and properties in the schema.</span>
+<span class="s2">    Do not use any other relationship types or properties that are not provided.</span>
+
+<span class="s2">    Schema:</span>
+<span class="s2">    </span><span class="si">{schema}</span>
+
+<span class="s2">    Note:</span>
+<span class="s2">    Do not include any explanations or apologies in your responses.</span>
+<span class="s2">    Do not respond to any questions that might ask anything other than</span>
+<span class="s2">    for you to construct a Cypher statement. Do not include any text except</span>
+<span class="s2">    the generated Cypher statement. Make sure the direction of the relationship is</span>
+<span class="s2">    correct in your queries. Make sure you alias both entities and relationships</span>
+<span class="s2">    properly. Do not run any queries that would add to or delete from</span>
+<span class="s2">    the database. Make sure to alias all statements that follow as with</span>
+<span class="s2">    statement (e.g. WITH v as visit, c.billing_amount as billing_amount)</span>
+<span class="s2">    If you need to divide numbers, make sure to</span>
+<span class="s2">    filter the denominator to be non zero.</span>
+
+<span class="s2">    Examples:</span>
+<span class="s2">    # Who is the oldest patient and how old are they?</span>
+<span class="s2">    MATCH (p:Patient)</span>
+<span class="s2">    RETURN p.name AS oldest_patient,</span>
+<span class="s2">        duration.between(date(p.dob), date()).years AS age</span>
+<span class="s2">    ORDER BY age DESC</span>
+<span class="s2">    LIMIT 1</span>
+
+<span class="s2">    # Which physician has billed the least to Cigna</span>
+<span class="s2">    MATCH (p:Payer)&lt;-[c:COVERED_BY]-(v:Visit)-[t:TREATS]-(phy:Physician)</span>
+<span class="s2">    WHERE p.name = &#39;Cigna&#39;</span>
+<span class="s2">    RETURN phy.name AS physician_name, SUM(c.billing_amount) AS total_billed</span>
+<span class="s2">    ORDER BY total_billed</span>
+<span class="s2">    LIMIT 1</span>
+
+<span class="s2">    # Which state had the largest percent increase in Cigna visits</span>
+<span class="s2">    # from 2022 to 2023?</span>
+<span class="s2">    MATCH (h:Hospital)&lt;-[:AT]-(v:Visit)-[:COVERED_BY]-&gt;(p:Payer)</span>
+<span class="s2">    WHERE p.name = &#39;Cigna&#39; AND v.admission_date &gt;= &#39;2022-01-01&#39; AND</span>
+<span class="s2">    v.admission_date &lt; &#39;2024-01-01&#39;</span>
+<span class="s2">    WITH h.state_name AS state, COUNT(v) AS visit_count,</span>
+<span class="s2">        SUM(CASE WHEN v.admission_date &gt;= &#39;2022-01-01&#39; AND</span>
+<span class="s2">        v.admission_date &lt; &#39;2023-01-01&#39; THEN 1 ELSE 0 END) AS count_2022,</span>
+<span class="s2">        SUM(CASE WHEN v.admission_date &gt;= &#39;2023-01-01&#39; AND</span>
+<span class="s2">        v.admission_date &lt; &#39;2024-01-01&#39; THEN 1 ELSE 0 END) AS count_2023</span>
+<span class="s2">    WITH state, visit_count, count_2022, count_2023,</span>
+<span class="s2">        (toFloat(count_2023) - toFloat(count_2022)) / toFloat(count_2022) * 100</span>
+<span class="s2">        AS percent_increase</span>
+<span class="s2">    RETURN state, percent_increase</span>
+<span class="s2">    ORDER BY percent_increase DESC</span>
+<span class="s2">    LIMIT 1</span>
+
+<span class="s2">    # How many non-emergency patients in North Carolina have written reviews?</span>
+<span class="s2">    MATCH (r:Review)&lt;-[:WRITES]-(v:Visit)-[:AT]-&gt;(h:Hospital)</span>
+<span class="s2">    WHERE h.state_name = &#39;NC&#39; and v.admission_type &lt;&gt; &#39;Emergency&#39;</span>
+<span class="s2">    RETURN count(*)</span>
+
+<span class="s2">    String category values:</span>
+<span class="s2">    Test results are one of: &#39;Inconclusive&#39;, &#39;Normal&#39;, &#39;Abnormal&#39;</span>
+<span class="s2">    Visit statuses are one of: &#39;OPEN&#39;, &#39;DISCHARGED&#39;</span>
+<span class="s2">    Admission Types are one of: &#39;Elective&#39;, &#39;Emergency&#39;, &#39;Urgent&#39;</span>
+<span class="s2">    Payer names are one of: &#39;Cigna&#39;, &#39;Blue Cross&#39;, &#39;UnitedHealthcare&#39;, &#39;Medicare&#39;,</span>
+<span class="s2">    &#39;Aetna&#39;</span>
+
+<span class="s2">    A visit is considered open if its status is &#39;OPEN&#39; and the discharge date is</span>
+<span class="s2">    missing.</span>
+<span class="s2">    Use abbreviations when</span>
+<span class="s2">    filtering on hospital states (e.g. &quot;Texas&quot; is &quot;TX&quot;,</span>
+<span class="s2">    &quot;Colorado&quot; is &quot;CO&quot;, &quot;North Carolina&quot; is &quot;NC&quot;,</span>
+<span class="s2">    &quot;Florida&quot; is &quot;FL&quot;, &quot;Georgia&quot; is &quot;GA&quot;, etc.)</span>
+
+<span class="s2">    Make sure to use IS NULL or IS NOT NULL when analyzing missing properties.</span>
+<span class="s2">    Never return embedding properties in your queries. You must never include the</span>
+<span class="s2">    statement &quot;GROUP BY&quot; in your query. Make sure to alias all statements that</span>
+<span class="s2">    follow as with statement (e.g. WITH v as visit, c.billing_amount as</span>
+<span class="s2">    billing_amount)</span>
+<span class="s2">    If you need to divide numbers, make sure to filter the denominator to be non</span>
+<span class="s2">    zero.</span>
+
+<span class="s2">    The question is:</span>
+<span class="s2">    </span><span class="si">{question}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">cypher_generation_prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span>
+    <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;question&quot;</span><span class="p">],</span> <span class="n">template</span><span class="o">=</span><span class="n">cypher_generation_template</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After defining the cypher generation prompt we create a <code class="docutils literal notranslate"><span class="pre">graph_query_chain</span></code> that translates the user question into a Cypher query, executes it against the database, and returns the answer. You can set the <code class="docutils literal notranslate"><span class="pre">verbose</span></code> as <code class="docutils literal notranslate"><span class="pre">True</span></code>, if you want to see the intermediate steps like the generated query.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_query_chain</span> <span class="o">=</span> <span class="n">GraphCypherQAChain</span><span class="o">.</span><span class="n">from_llm</span><span class="p">(</span>
+    <span class="n">llm</span><span class="p">,</span> 
+    <span class="n">graph</span><span class="o">=</span><span class="n">graph</span><span class="p">,</span> 
+    <span class="n">validate_cypher</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">cypher_prompt</span><span class="o">=</span><span class="n">cypher_generation_prompt</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">return_intermediate_steps</span><span class="o">=</span><span class="kc">True</span>
+    
+<span class="p">)</span>
+
+<span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;Who are the physicians who treated patients that have O- blood type?&quot;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">graph_query_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+<span class="n">intermediate_results</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;intermediate_steps&#39;</span><span class="p">]</span>
+
+<span class="n">qa_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="n">intermediate_results</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The physicians who treated patients with O- blood type include Jeffrey Williams, Leslie Williams, Luis Powell MD, Taylor Williams PhD, Nancy Nichols, Kyle Campbell, Abigail Cummings, Nathan Smith, Daniel Morgan II, and Charles Kim.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Chain to answer when fallback happens.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fallback_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    You are an assistant for question-answering tasks. Answer the question based upon your knowledge. Use three sentences maximum and keep the answer concise.\n\n</span>
+<span class="sd">    Question: {question}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">fallback_chain</span> <span class="o">=</span> <span class="n">fallback_prompt</span> <span class="o">|</span> <span class="n">llm</span> <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Query router that does the query analysis and re-direct the user question either to the Neo4J vector index, Neo4J graph database, or to the fallback.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">QueryRouter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Routes the question to either the vectorstore or the graph database&quot;&quot;&quot;</span>
+    
+    <span class="n">datasource</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;vectorstore&#39;</span><span class="p">,</span> <span class="s1">&#39;graph&#39;</span><span class="p">,</span> <span class="s1">&#39;fallback&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;The datasource to use for answering the user question. If the user question can be answered using the reviews about the hospital, the datasource should be set to &#39;vectorstore&#39;. If the question should be answered using the information from a databse containing information about hospitals that a company manages, the datasource should be set to &#39;graph&#39;. If the question can be answered using LLM&#39;s internal knowledge, the datasource should be set to &#39;fallback&#39;&quot;</span><span class="p">)</span>
+    
+
+<span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;How is the patient safety in the hospital?&quot;</span>
+
+<span class="n">query_llm</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">with_structured_output</span><span class="p">(</span><span class="n">QueryRouter</span><span class="p">)</span>
+
+<span class="n">query_router_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;You are an expert at routing a user question to a vectorstore or to a graph database containing information from a hospital system. The vectorstore contains documents related to the user reviews of a hospital.</span>
+<span class="sd">Use the vectorstore for questions that can be answered using peoples&#39; opinions on the hospital. Otherwise, use graph to answer questions using the graph database containing information from a company database that manages several hospitals. If the question can be answered using LLM&#39;s internal knowledge, use fallback.\n\n</span>
+<span class="sd">Question: {question}&quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">query_routing_chain</span> <span class="o">=</span> <span class="p">(</span><span class="n">query_router_prompt</span> <span class="o">|</span> <span class="n">query_llm</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">question</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">query_routing_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s1">&#39;question&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">question</span><span class="p">})</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">system_q</span> <span class="o">=</span> <span class="s2">&quot;What are the specialities of all the doctors in all the hospitals?&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">system_q</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">query_routing_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s1">&#39;question&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">system_q</span><span class="p">})</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fallback_q</span> <span class="o">=</span> <span class="s2">&quot;What is the capital of France?&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fallback_q</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">query_routing_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s1">&#39;question&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">fallback_q</span><span class="p">})</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>How is the patient safety in the hospital?: datasource=&#39;vectorstore&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>What are the specialities of all the doctors in all the hospitals?: datasource=&#39;graph&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>What is the capital of France?: datasource=&#39;fallback&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Hallucination evaluator checks whether or not the generated answer is grounded by the facts.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HallucinationEvaluator</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Binary score for hallucination present in generation answer.&quot;&quot;&quot;</span>
+
+    <span class="n">grade</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Answer is grounded in the facts, &#39;yes&#39; or &#39;no&#39;&quot;</span>
+    <span class="p">)</span>
+    
+<span class="n">hallucination_llm</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">with_structured_output</span><span class="p">(</span><span class="n">HallucinationEvaluator</span><span class="p">)</span>
+<span class="n">hallucination_prompt</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    You are a grader assessing whether an LLM generation is grounded in / supported by a set of retrieved facts. \n</span>
+<span class="sd">    Give a binary score &#39;yes&#39; or &#39;no&#39;. &#39;Yes&#39; means that the answer is grounded in / supported by the set of facts.\n\n</span>
+<span class="sd">    Set of facts: {documents} \n\n LLM generation: {generation}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">hallucination_chain</span> <span class="o">=</span> <span class="n">hallucination_prompt</span> <span class="o">|</span> <span class="n">hallucination_llm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">generation</span> <span class="o">=</span> <span class="n">qa_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="n">docs</span><span class="p">})</span>
+<span class="n">n_question</span> <span class="o">=</span> <span class="s2">&quot;What are the specialities of all the doctors in all the hospitals?&quot;</span>
+<span class="n">n_docs</span> <span class="o">=</span> <span class="n">review_retriever</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">n_question</span><span class="p">)</span>
+
+<span class="n">hallucination_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;documents&quot;</span><span class="p">:</span> <span class="n">n_docs</span><span class="p">,</span> <span class="s2">&quot;generation&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HallucinationEvaluator(grade=&#39;no&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Graph state definition.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+
+<span class="k">class</span> <span class="nc">GraphState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the state of our graph.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        question: question</span>
+<span class="sd">        generation: LLM generation</span>
+<span class="sd">        documents: list of documents</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">question</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">generation</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">documents</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creating methods for the nodes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">GraphState</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieves the documents from the vectorstore.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        state (dict): New key added to state, documents, that contains retrieved documents</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; 📃 Retrieving user reviews ...&quot;</span><span class="p">)</span>
+    
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="n">docs</span> <span class="o">=</span> <span class="n">review_retriever</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+    
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">docs</span>
+    
+    <span class="k">return</span> <span class="n">state</span>
+
+<span class="k">def</span> <span class="nf">fallback</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fallback to LLM&#39;s internal knowledge.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        state (dict): New key added to state, generation, that contains LLM generation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; 👈 Fallback to LLM&#39;s internal knowledge ...&quot;</span><span class="p">)</span>
+    
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="n">generation</span> <span class="o">=</span> <span class="n">fallback_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+    
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">generation</span>
+    
+    <span class="k">return</span> <span class="n">state</span>
+
+<span class="k">def</span> <span class="nf">query_graph</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Queries the graph database.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        state (dict): New key added to state, generation, that contains LLM generation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; 📊 Querying the graph database ...&quot;</span><span class="p">)</span>
+    
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="n">generation</span> <span class="o">=</span> <span class="n">graph_query_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+    
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">generation</span><span class="p">[</span><span class="s1">&#39;intermediate_steps&#39;</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">state</span>
+
+<span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates an answer using the retrieved documents/query results.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        state (dict): New key added to state, generation, that contains LLM generation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; 🧠 Generating an answer ...&quot;</span><span class="p">)</span>
+    
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="n">docs</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span>
+    <span class="n">generation</span> <span class="o">=</span> <span class="n">qa_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="n">docs</span><span class="p">})</span>
+    
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">generation</span>
+    
+    <span class="k">return</span> <span class="n">state</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creating conditional edges.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">route_question</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Route question to web search or RAG.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Next node to call</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="n">route</span> <span class="o">=</span> <span class="n">query_routing_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+    
+    <span class="k">if</span> <span class="n">route</span><span class="o">.</span><span class="n">datasource</span> <span class="o">==</span> <span class="s2">&quot;vectorstore&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 📚 Routing to the review database ...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;retrieve&quot;</span>
+    
+    <span class="k">elif</span> <span class="n">route</span><span class="o">.</span><span class="n">datasource</span> <span class="o">==</span> <span class="s2">&quot;graph&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 📊 Routing to the graph database ...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;query_graph&quot;</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; 👈 Routing to fallback...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;fallback&quot;</span>
+    
+    
+<span class="k">def</span> <span class="nf">check_hallucination</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the generation is hallucinated.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (dict): The current graph state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Next node to call</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">generation</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span>
+    <span class="n">docs</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">]</span>
+    
+    <span class="n">grounded</span> <span class="o">=</span> <span class="n">hallucination_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;documents&quot;</span><span class="p">:</span> <span class="n">docs</span><span class="p">,</span> <span class="s2">&quot;generation&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="p">})</span>
+    
+    <span class="k">if</span> <span class="n">grounded</span><span class="o">.</span><span class="n">grade</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; ✅ </span><span class="se">\033</span><span class="s2">[92mAnswer addresses the question</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;useful&quot;</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; ❌ </span><span class="se">\033</span><span class="s2">[91mGeneration is not grounded in the documents</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;not supported&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creating the grpah with defined nodes and edges.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langgraph.graph</span> <span class="kn">import</span> <span class="n">END</span><span class="p">,</span> <span class="n">StateGraph</span>
+
+<span class="n">workflow</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">GraphState</span><span class="p">)</span>
+
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;retrieve&quot;</span><span class="p">,</span> <span class="n">retrieve</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;query_graph&quot;</span><span class="p">,</span> <span class="n">query_graph</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;fallback&quot;</span><span class="p">,</span> <span class="n">fallback</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;generate&quot;</span><span class="p">,</span> <span class="n">generate</span><span class="p">)</span>
+
+<span class="n">workflow</span><span class="o">.</span><span class="n">set_conditional_entry_point</span><span class="p">(</span>
+    <span class="n">route_question</span><span class="p">,</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;retrieve&quot;</span><span class="p">:</span> <span class="s2">&quot;retrieve&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;query_graph&quot;</span><span class="p">:</span> <span class="s2">&quot;query_graph&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fallback&quot;</span><span class="p">:</span> <span class="s2">&quot;fallback&quot;</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;query_graph&#39;</span><span class="p">,</span> <span class="s1">&#39;generate&#39;</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;retrieve&#39;</span><span class="p">,</span> <span class="s1">&#39;generate&#39;</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_conditional_edges</span><span class="p">(</span>
+    <span class="s1">&#39;generate&#39;</span><span class="p">,</span>
+    <span class="n">check_hallucination</span><span class="p">,</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;useful&quot;</span><span class="p">:</span> <span class="n">END</span><span class="p">,</span>
+        <span class="s2">&quot;not supported&quot;</span><span class="p">:</span> <span class="s2">&quot;generate&quot;</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;fallback&#39;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">run_pipeline</span><span class="p">(</span><span class="n">question</span><span class="p">):</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">app</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;generate&#39;</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;fallback&#39;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Question: </span><span class="si">{</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Answer: </span><span class="si">{</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;generation&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">run_pipeline</span><span class="p">(</span><span class="s2">&quot;What have patients said about hospital efficiency?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📚 Routing to the review database ...
+&gt; 📃 Retrieving user reviews ...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 🧠 Generating an answer ...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; ✅ Answer addresses the question
+
+Question: What have patients said about hospital efficiency?
+Answer: Patients have given mixed reviews about hospital efficiency. They appreciated the professionalism of the doctors and the caring nature of the nursing staff. However, they expressed concerns about the lack of communication regarding treatment plans, confusing administrative processes, and constant interruptions during the night.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Tha Langsmith trace for the above workflow will look like <a class="reference external" href="https://smith.langchain.com/public/cb562c97-44e4-407b-9bf1-b8c2f35e3e1b/r">this</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># run_pipeline(&quot;Who are the physicians who treated patients that have O- blood type and who is the most frequent payer for them?&quot;)</span>
+<span class="n">run_pipeline</span><span class="p">(</span><span class="s2">&quot;What is total number visits in all hospitals in Texas that were paid by the company &#39;Cigna&#39;?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 📊 Routing to the graph database ...
+&gt; 📊 Querying the graph database ...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 🧠 Generating an answer ...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; ✅ Answer addresses the question
+
+Question: What is total number visits in all hospitals in Texas that were paid by the company &#39;Cigna&#39;?
+Answer: The total number of visits in all hospitals in Texas that were paid by the company &#39;Cigna&#39; is 204.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The Langsmith trace for the above workflow will look like <a class="reference external" href="https://smith.langchain.com/public/bb4c63f0-3434-43b7-a934-f0542a155e69/r">this</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">run_pipeline</span><span class="p">(</span><span class="s2">&quot;Hi! How are you doing today?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 👈 Routing to fallback...
+&gt; 👈 Fallback to LLM&#39;s internal knowledge ...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Question: Hi! How are you doing today?
+Answer: As an artificial intelligence, I don&#39;t have feelings, but I&#39;m here and ready to assist you. How can I help you today?
+</pre></div>
+</div>
+</div>
+</div>
+<p>The Langsmith trace for the above workflow will look like <a class="reference external" href="https://smith.langchain.com/public/85d98d3e-9e01-45da-a1f7-e99dd3cbd0b6/r">this</a>.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="9_Generation_2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>Generation II</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sakuna Jayasundara
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
