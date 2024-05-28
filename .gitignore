@@ -5,6 +5,7 @@ __pycache__/
 data/vectorstores
 data/vectorstore*
 book/data/vectorstore
+book/_config.yml
 book/data/vectorstore*
 book/secrets
 book/_build
