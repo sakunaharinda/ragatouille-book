@@ -9,6 +9,7 @@ book/_config.yml
 book/data/vectorstore*
 book/secrets
 book/_build
+streamlit
 # C extensions
 .DS_Store
 *.so
