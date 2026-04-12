@@ -4,7 +4,7 @@
 format: jb-book
 root: intro
 parts:
-  - caption: Tutorials
+  - caption: Basics
     numbered: true
     chapters:
     - file: 1_Intro
@@ -17,3 +17,7 @@ parts:
     - file: 8_Generation
     - file: 9_Generation_2
     - file: 10_Final
+  - caption: Agentic AI Security
+    numbered: true
+    chapters:
+    - file: 1_HDP
