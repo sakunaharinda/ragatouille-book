@@ -168,3 +168,5 @@ cython_debug/
 #.idea/
 
 book/streamlit
+# MyST build outputs
+_build

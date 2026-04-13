@@ -1,6 +1,6 @@
-# Learn RAG with Langchain 🦜⛓️‍💥
+# Learn With Langchain 🦜⛓️‍💥
 
-**Welcome to your ultimate guide for mastering Retrieval-Augmented Generation (RAG) with LangChain!**
+**Welcome to your ultimate guide for mastering Retrieval-Augmented Generation (RAG) and Agents with LangChain!**
 
 In today's rapidly evolving landscape of artificial intelligence, the ability to generate highly accurate and contextually relevant information is paramount. Retrieval-Augmented Generation (RAG) is a cutting-edge technique that enhances the capabilities of generative models by integrating external knowledge sources. This not only improves the quality of the generated content but also ensures that it is grounded in reliable data. 
 

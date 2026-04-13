@@ -1,16 +1,24 @@
-# Learn RAG with Langchain 🦜⛓️‍💥
+# Build Intelligent AI Systems with LangChain 🦜⛓️‍💥
 
-**Welcome to your ultimate guide for mastering Retrieval-Augmented Generation (RAG) with LangChain!**
+**Your hands-on guide to Retrieval-Augmented Generation, Agentic AI, and Agentic Security.**
 
-In today's rapidly evolving landscape of artificial intelligence, the ability to generate highly accurate and contextually relevant information is paramount. Retrieval-Augmented Generation (RAG) is a cutting-edge technique that enhances the capabilities of generative models by integrating external knowledge sources. This not only improves the quality of the generated content but also ensures that it is grounded in reliable data. 
+As AI moves from answering questions to taking actions — approving payments, deploying code, managing records, executing contracts — the way we build and secure these systems has to evolve with it. This guide takes you from the foundations of RAG through the architecture of agentic workflows and into the emerging discipline of securing AI agents in production.
 
-This tutorial series is dedicated to providing you with a comprehensive, step-by-step guide to implementing RAG using LangChain, a powerful framework designed for building and deploying robust language model applications. We begin with an introduction to the basic RAG pipeline, providing a foundation for understanding how retrieval-based systems and generative models can be combined to produce accurate and contextually relevant responses. As we progress, we'll delve into the nuances of query transformation, a crucial step that refines user queries to ensure the language model comprehends and processes them accurately. This is followed by an exploration of hypothetical document embeddings, a technique used to generate multiple vector representations of potential documents, which aids in assessing their relevance before retrieval.
+## Part I — Retrieval-Augmented Generation (Basics)
 
-Further enhancing the RAG pipeline, we'll discuss routing mechanisms that intelligently select the most appropriate data sources for answering queries. This dynamic selection ensures that the information retrieved is both relevant and comes from the best possible source. Additionally, we'll cover the construction of executable queries, effective indexing strategies, and various retrieval techniques such as self RAG, adaptive RAG, and CRAG (Corrective Retrieval-Augmented Generation), each offering unique advantages for different use cases. The final step in the pipeline is the generation phase, where the language model synthesizes the retrieved information to produce coherent and accurate responses.
+We start with the fundamentals. Retrieval-Augmented Generation (RAG) is the technique of grounding a language model's outputs in external knowledge — combining the reasoning power of generative AI with the reliability of structured, retrievable data. The result is responses that are not only coherent but factually anchored.
 
-By integrating all the concepts learned throughout the blog, you'll see how to apply the RAG pipeline in a real-world scenario, showcasing its power and flexibility. Whether you're new to RAG or looking to refine your skills, this guide provides valuable insights and practical knowledge to help you succeed. Let’s embark on this exciting journey into the world of Retrieval-Augmented Generation with LangChain!
+We cover the full RAG pipeline step by step: query transformation, hypothetical document embeddings, routing mechanisms, indexing strategies, and advanced retrieval techniques including Self-RAG, Adaptive RAG, and CRAG (Corrective Retrieval-Augmented Generation). Each chapter builds on the last, giving you both the theory and working implementations using LangChain.
 
-The organization and the content of this series is primarily based on [Langchain Tutoral Series](https://www.youtube.com/watch?v=wd7TZ4w1mSw&list=PLfaIDFEXuae2LXbO1_PKyVJiQ23ZztA0x) with some interesting improvements. 
+## Part II — Agentic AI and Security
+
+RAG is a pipeline. Agents are something more: autonomous systems that plan, delegate, loop, and act. We explore how LangGraph extends LangChain into stateful multi-agent workflows, where specialized agents handle distinct tasks, pass state to one another, and make routing decisions dynamically. Autonomous agents operating on sensitive data introduce a category of risk that traditional software security wasn't designed for. When a human delegates to an agent — and that agent delegates to another — the original authorization context disappears. There is no built-in record of what was approved, which agents ran, or whether any action was within scope.
+
+This section introduces **HDP (Human Delegation Provenance)**, an open protocol from [Helixar](https://helixar.ai) that creates a cryptographic chain-of-custody from the human's authorization event through every downstream agent action. We demonstrate the integration of HDP with LangGraph, simulate real-world attack scenarios — rogue agent injection, chain blending, and evidence erasure — and show exactly which detection layer catches each threat.
+
+---
+
+The organization and content of the RAG sections is primarily based on the [**LangChain Tutorial Series**](https://www.youtube.com/watch?v=wd7TZ4w1mSw&list=PLfaIDFEXuae2LXbO1_PKyVJiQ23ZztA0x) with significant extensions and improvements.
 
 ```{tableofcontents}
 ```

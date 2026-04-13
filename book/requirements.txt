@@ -1,11 +1,11 @@
-langchain==0.1.17
+langchain
 openai==1.25.1
-langgraph==0.0.44
+langgraph
 python-dotenv==1.0.1
-langchain-openai==0.1.6
+langchain-openai
 pypdf==4.2.0
-chromadb==0.5.0
-langchainhub==0.1.15
+chromadb
+langchainhub
 youtube-transcript-api==0.6.2
 pytube==15.0.0
 pandas==2.2.2
@@ -15,4 +15,7 @@ cohere==5.4.0
 tavily-python==0.3.3
 neo4j==5.20.0
 streamlit==1.35.0
-hdp-langchain==0.1.0
+hdp-langchain
+cryptography
+langchain-text-splitters
+bs4
