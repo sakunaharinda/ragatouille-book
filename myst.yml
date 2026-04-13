@@ -35,4 +35,4 @@ site:
     # favicon: favicon.ico
     logo: book/logo-light.svg
     logo_dark: book/logo-dark.svg
-    outline_maxdepth: 4
+    outline_maxdepth: 2
